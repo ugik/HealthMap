@@ -1,0 +1,21 @@
+body {
+    background-attachment: fixed;
+    background-color: #FFFFFF;
+    background-image: url(/static/images/MapBackground.jpg);
+    background-position: center bottom;
+#    background-repeat: no-repeat;
+    color: #A90123;
+    margin: 10;
+    padding: 10;
+    font-family: Ubuntu;
+}
+
+#pageContainer {
+    background: url(/static/images/Logo.jpg) no-repeat scroll right bottom #FFFFCC;
+    background-size: 100px 100px;
+    margin: 10 auto;
+    padding: 15;
+    position: relative;
+    width: 900px;
+    min-height: 500px;
+}

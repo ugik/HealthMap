@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div id='home_page'>
+        Health Map
+
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Google Maps</title>
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCBo3eZFzgJ_u2Wz7ZOVeHz24wjgpmsMGE" type="text/javascript"></script>
+  </head>
+  <body onunload="GUnload()">
+
+    <div id="map" style="width: 750px; height: 600px"></div>
+
+    <noscript><b>JavaScript must be enabled in order for you to use Google Maps.</b> 
+      However, it seems JavaScript is either disabled or not supported by your browser. 
+      To view Google Maps, enable JavaScript by changing your browser options, and then 
+      try again.
+    </noscript>
+ 
+
+    <script type="text/javascript">
+    //<![CDATA[
+
+    if (GBrowserIsCompatible()) {
+
+      var polys = [];
+      var labels = [];
+
+
+      // === A method for testing if a point is inside a polygon
+      // === Returns true if poly contains point
+      // === Algorithm shamelessly stolen from http://alienryderflex.com/polygon/ 
+      GPolygon.prototype.Contains = function(point) {
+        var j=0;
+        var oddNodes = false;
+        var x = point.lng();
+        var y = point.lat();
+        for (var i=0; i < this.getVertexCount(); i++) {
+          j++;
+          if (j == this.getVertexCount()) {j = 0;}
+          if (((this.getVertex(i).lat() < y) && (this.getVertex(j).lat() >= y))
+          || ((this.getVertex(j).lat() < y) && (this.getVertex(i).lat() >= y))) {
+            if ( this.getVertex(i).lng() + (y - this.getVertex(i).lat())
+            /  (this.getVertex(j).lat()-this.getVertex(i).lat())
+            *  (this.getVertex(j).lng() - this.getVertex(i).lng())<x ) {
+              oddNodes = !oddNodes
+            }
+          }
+        }
+        return oddNodes;
+      }
+
+
+
+      // Display the map, with some controls and set the initial location 
+      var map = new GMap2(document.getElementById("map"));
+      map.addControl(new GLargeMapControl());
+      map.addControl(new GMapTypeControl());
+      map.setCenter(new GLatLng(33.1,-95.72),4);
+
+
+      GEvent.addListener(map, "click", function(overlay,point) {
+        if (!overlay) {
+          for (var i=0; i<polys.length; i++) {
+            if (polys[i].Contains(point)) {
+              map.openInfoWindowHtml(point,"You clicked on "+labels[i]);
+              //i = 999; // Jump out of loop
+            }
+          }
+        }
+      });
+   
+
+      // Read the data from states.xml
+      
+      var request = GXmlHttp.create();
+      request.open("GET", "/static/states.xml", true);
+      request.onreadystatechange = function() {
+        if (request.readyState == 4) {
+          var xmlDoc = GXml.parse(request.responseText);
+          
+          // ========= Now process the polylines ===========
+          var states = xmlDoc.documentElement.getElementsByTagName("state");
+
+          // read each line
+          for (var a = 0; a < states.length; a++) {
+            // get any state attributes
+            var label  = states[a].getAttribute("name");
+            var colour = states[a].getAttribute("colour");
+            // read each point on that line
+            var points = states[a].getElementsByTagName("point");
+            var pts = [];
+            for (var i = 0; i < points.length; i++) {
+               pts[i] = new GLatLng(parseFloat(points[i].getAttribute("lat")),
+                                   parseFloat(points[i].getAttribute("lng")));
+            }
+            var poly = new GPolygon(pts,"#AAA000",1,1,colour,0.15,{clickable:false});
+            polys.push(poly);
+            labels.push(label);
+            map.addOverlay(poly);
+          }
+          // ================================================           
+        }
+      }
+      request.send(null);
+
+    }
+    
+    // display a warning if the browser was not compatible
+    else {
+      alert("Sorry, the Google Maps API is not compatible with this browser");
+    }
+
+    // This Javascript is based on code provided by the
+    // Community Church Javascript Team
+    // http://www.bisphamchurch.org.uk/   
+    // http://econym.org.uk/gmap/
+
+    //]]>
+    </script>
+  </body>
+
+</html>
+
+
+
+
+
+
+  </div>
+
+{% endblock %}

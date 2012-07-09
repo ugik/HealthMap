@@ -4,8 +4,8 @@ import datetime
 class Region(models.Model):
     state = models.CharField(max_length=25, verbose_name='state name')
     state_abbrev = models.CharField(max_length=2, verbose_name='state')
-    county = models.CharField(max_length=25, blank=True)
-    imageURL = models.URLField(blank=True)
+    county = models.CharField(max_length=25)
+    imageURL = models.URLField()
     def __unicode__(self):
         return u'state:%s (county:%s)' % (self.state_abbrev, county)
     
@@ -18,15 +18,15 @@ class Polyline(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=25)
-    imageURL = models.URLField(blank=True)
+    imageURL = models.URLField()
     def __unicode__(self):
         return self.name
 
 class Dataset(models.Model):
     category = models.ForeignKey('Category')
     name = models.CharField(max_length=15)
-    legend = models.CharField(max_length=25, blank=True)
-    imageURL = models.URLField(blank=True)
+    legend = models.CharField(max_length=25)
+    imageURL = models.URLField()
     citations = models.TextField(blank=True)
     created = models.DateField(editable=False)
     updated = models.DateTimeField(editable=False)

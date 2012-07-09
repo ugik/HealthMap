@@ -58,7 +58,7 @@
       var map = new GMap2(document.getElementById("map"));
       map.addControl(new GLargeMapControl());
       map.addControl(new GMapTypeControl());
-      map.setCenter(new GLatLng(33.1,-95.72),4);
+      map.setCenter(new GLatLng(33.1,-95),4);
 
 
       GEvent.addListener(map, "click", function(overlay,point) {
@@ -113,12 +113,6 @@
       alert("Sorry, the Google Maps API is not compatible with this browser");
     }
 
-    // This Javascript is based on code provided by the
-    // Community Church Javascript Team
-    // http://www.bisphamchurch.org.uk/   
-    // http://econym.org.uk/gmap/
-
-    //]]>
     </script>
   </body>
 

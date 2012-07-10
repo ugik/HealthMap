@@ -2,15 +2,17 @@ from django.db import models
 import datetime
 
 class Region(models.Model):
-    state = models.CharField(max_length=25, verbose_name='state name')
-    state_abbrev = models.CharField(max_length=2, verbose_name='state')
-    county = models.CharField(max_length=25, blank=True)
+    state = models.CharField(max_length=2, verbose_name='state', db_index=True, unique=True)
+    stateName = models.CharField(max_length=25, verbose_name='state name')
+    county = models.CharField(max_length=25, blank=True, db_index=True, unique=True)
     imageURL = models.URLField(blank=True)
     def __unicode__(self):
         return u'state:%s (county:%s)' % (self.state_abbrev, county)
+    class Meta:
+        ordering = ['state', 'county']
     
 class Polyline(models.Model):
-    region = models.ForeignKey('Region')
+    region = models.ForeignKey('Region', db_index=True)
     lat = models.DecimalField(max_digits=7, decimal_places=4, verbose_name='latitude')
     lng = models.DecimalField(max_digits=7, decimal_places=4, verbose_name='longitude')
     def __unicode__(self):
@@ -24,7 +26,7 @@ class Category(models.Model):
 
 class Dataset(models.Model):
     category = models.ForeignKey('Category')
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, db_index=True)
     legend = models.CharField(max_length=25, blank=True)
     description = models.TextField(blank=True)
     imageURL = models.URLField(blank=True)
@@ -55,11 +57,13 @@ class Range(models.Model):
         return self.name
 
 class Datarow(models.Model):
-    dataset = models.ForeignKey('Dataset')
-    region = models.ForeignKey('Region')
+    dataset = models.ForeignKey('Dataset', db_index=True)
+    region = models.ForeignKey('Region', db_index=True)
     value = models.DecimalField(max_digits=12, decimal_places=3)
     def __unicode__(self):
         return self.value
+    class Meta:
+        unique_together = ("dataset", "region")
 
 class History(models.Model):
     name = models.CharField(max_length=15)

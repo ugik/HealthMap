@@ -1,0 +1,7 @@
+from django.contrib import admin
+from HealthMap.models import *
+        
+admin.site.register(Region, Polyline, Category)
+admin.site.register(Dataset, Range, Datarow)
+admin.site.register(History)
+

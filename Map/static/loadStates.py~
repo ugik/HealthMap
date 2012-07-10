@@ -1,0 +1,17 @@
+from xml.dom import minidom
+
+xmldoc = minidom.parse('states.xml')
+cNodes = xmldoc.childNodes
+sList = cNodes[0].getElementsByTagName("state")
+
+print sList[1].getAttribute('name')
+
+for node in sList:
+    pList = node.getElementsByTagName("point")
+
+    print pList[0].toxml()
+    #print pList[0].getAttribute('lat')
+    #print pList[0].getAttribute('lng')
+
+for state in sList:
+    print ("%s (%s)" % (state.getAttribute('name'), state.getAttribute('abbrev')))

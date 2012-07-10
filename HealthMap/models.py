@@ -4,10 +4,10 @@ import datetime
 class Region(models.Model):
     state = models.CharField(max_length=2, verbose_name='state', db_index=True, unique=True)
     stateName = models.CharField(max_length=25, verbose_name='state name')
-    county = models.CharField(max_length=25, blank=True, db_index=True, unique=True)
+    county = models.CharField(max_length=25, blank=True, db_index=True)
     imageURL = models.URLField(blank=True)
     def __unicode__(self):
-        return u'state:%s (county:%s)' % (self.state_abbrev, county)
+        return u'state:%s (county:%s)' % (self.state, self.county)
     class Meta:
         ordering = ['state', 'county']
     
@@ -42,7 +42,7 @@ class Dataset(models.Model):
         if not self.id:
             self.created = datetime.date.today()
         self.updated = datetime.datetime.today()
-        super(Patient, self).save(*args, **kwargs)
+        super(Dataset, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name
@@ -61,7 +61,7 @@ class Datarow(models.Model):
     region = models.ForeignKey('Region', db_index=True)
     value = models.DecimalField(max_digits=12, decimal_places=3)
     def __unicode__(self):
-        return self.value
+        return unicode(self.value)
     class Meta:
         unique_together = ("dataset", "region")
 
@@ -75,7 +75,7 @@ class History(models.Model):
         if not 'force_update' in kwargs:
             kwargs['force_update'] = False
         self.searched = datetime.datetime.today()
-        super(Patient, self).save(*args, **kwargs)
+        super(History, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name

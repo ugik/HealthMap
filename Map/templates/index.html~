@@ -71,39 +71,35 @@
           }
         }
       });
-   
 
-      // Read the data from states.xml
+      // defaults
+      var line_color = "#AAA000";
+      var opaque = 0.25;
       
-      var request = GXmlHttp.create();
-      request.open("GET", "/static/states.xml", true);
-      request.onreadystatechange = function() {
-        if (request.readyState == 4) {
-          var xmlDoc = GXml.parse(request.responseText);
-          
-          // ========= Now process the polylines ===========
-          var states = xmlDoc.documentElement.getElementsByTagName("state");
+      // working vars
+      var color = "";
+      var pts = [];
+      var i = 0;
 
-          // read each line
-          for (var a = 0; a < states.length; a++) {
+{% for row in dataset.datarow_set.all %}
+            color = "#FFF000";
+            pts = [];
+            i = 0;
+
             // get any state attributes
-            var label  = states[a].getAttribute("name");
-            var colour = states[a].getAttribute("colour");
-            // read each point on that line
-            var points = states[a].getElementsByTagName("point");
-            var pts = [];
-            for (var i = 0; i < points.length; i++) {
-               pts[i] = new GLatLng(parseFloat(points[i].getAttribute("lat")),
-                                   parseFloat(points[i].getAttribute("lng")));
-            }
-            var poly = new GPolygon(pts,"#AAA000",1,1,colour,0.15,{clickable:false});
+    {% for line in row.region.polyline_set.all %}
+               pts[i] = new GLatLng(parseFloat( {{ line.lat }} ),
+                                   parseFloat( {{ line.lng }} ));
+               i++;
+    {% endfor %}
+
+            var poly = new GPolygon(pts,line_color,1,1,color,opaque,{clickable:false});
             polys.push(poly);
-            labels.push(label);
+            labels.push("{{ row.region.state }}");
             map.addOverlay(poly);
-          }
-          // ================================================           
-        }
-      }
+
+{% endfor %}
+
       request.send(null);
 
     }
@@ -115,13 +111,7 @@
 
     </script>
   </body>
-
 </html>
-
-
-
-
-
 
   </div>
 

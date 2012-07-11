@@ -17,6 +17,8 @@ class Polyline(models.Model):
     lng = models.DecimalField(max_digits=7, decimal_places=4, verbose_name='longitude')
     def __unicode__(self):
         return u'lat:%3.4f lng:%3.4f' % (self.lat, self.lng)
+    class Meta:
+        ordering = ['pk']
 
 class Category(models.Model):
     name = models.CharField(max_length=25)
@@ -60,6 +62,12 @@ class Datarow(models.Model):
     dataset = models.ForeignKey('Dataset', db_index=True)
     region = models.ForeignKey('Region', db_index=True)
     value = models.DecimalField(max_digits=12, decimal_places=3)
+    def color(self):
+        return_color = "#FFFFFF"
+        for range in self.dataset.range_set.all():
+            if self.value>range.low and self.value<range.high:
+                return_color = range.color
+        return return_color
     def __unicode__(self):
         return unicode(self.value)
     class Meta:

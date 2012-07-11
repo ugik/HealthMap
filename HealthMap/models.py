@@ -62,6 +62,12 @@ class Datarow(models.Model):
     dataset = models.ForeignKey('Dataset', db_index=True)
     region = models.ForeignKey('Region', db_index=True)
     value = models.DecimalField(max_digits=12, decimal_places=3)
+    def color(self):
+        return_color = "#FFFFFF"
+        for range in self.dataset.range_set.all():
+            if self.value>range.low and self.value<range.high:
+                return_color = range.color
+        return unicode(return_color)
     def __unicode__(self):
         return unicode(self.value)
     class Meta:

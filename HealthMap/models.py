@@ -17,6 +17,8 @@ class Polyline(models.Model):
     lng = models.DecimalField(max_digits=7, decimal_places=4, verbose_name='longitude')
     def __unicode__(self):
         return u'lat:%3.4f lng:%3.4f' % (self.lat, self.lng)
+    class Meta:
+        ordering = ['pk']
 
 class Category(models.Model):
     name = models.CharField(max_length=25)

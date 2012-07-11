@@ -61,7 +61,7 @@ class Datarow(models.Model):
     region = models.ForeignKey('Region', db_index=True)
     value = models.DecimalField(max_digits=12, decimal_places=3)
     def __unicode__(self):
-        return self.value
+        return unicode(self.value)
     class Meta:
         unique_together = ("dataset", "region")
 

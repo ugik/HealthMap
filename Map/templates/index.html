@@ -82,12 +82,13 @@
       var i = 0;
 
 {% for row in dataset.datarow_set.all %}
-    {% if row.region.state == "MI" %}
+    {% if row.region.state != "OO" %}
             color = "#FFF000";
             pts = [];
             i = 0;
 
             // get any state attributes
+    
     {% for line in row.region.polyline_set.all %}
                pts[i] = new GLatLng(parseFloat( {{ line.lat }} ),
                                    parseFloat( {{ line.lng }} ));

@@ -32,11 +32,11 @@ def run():
         dat.delete()
     
     # create 3 test Datasets
-    dat1 = Dataset(category=cat, name="Test 1", description="1st Test Dataset", legend="Empty")
+    dat1 = Dataset(category=cat, name="Test1", description="1st Test Dataset", legend="Empty")
     dat1.save()
-    dat2 = Dataset(category=cat, name="Test 2", description="2nd Test Dataset", legend="Empty")
+    dat2 = Dataset(category=cat, name="Test2", description="2nd Test Dataset", legend="Empty")
     dat2.save()
-    dat3 = Dataset(category=cat, name="Test 3", description="3rd Test Dataset", legend="Empty")
+    dat3 = Dataset(category=cat, name="Test3", description="3rd Test Dataset", legend="Empty")
     dat3.save()
     print "Created Test Datasets"
 

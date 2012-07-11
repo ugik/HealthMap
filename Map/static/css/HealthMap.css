@@ -10,8 +10,8 @@ body {
 }
 
 #pageContainer {
-    background: url(/static/images/Logo.jpg) no-repeat scroll right bottom #FFFFCC;
-    background-size: 100px 100px;
+    background: url(/static/images/Logo.jpg) no-repeat scroll right top #FFFFCC;
+    background-size: 100px 40px;
     margin: 5 auto;
     padding: 15;
     position: relative;

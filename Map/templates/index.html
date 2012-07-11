@@ -1,14 +1,35 @@
 {% extends 'base.html' %}
-{% block content %}
-    <div id='home_page'>
-        Health Map
+<title>Health Map</title>
 
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <title>Google Maps</title>
+{% block extrahead %}
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  
+  <script>
+  $(document).ready(function() {
+    $("input#autocomplete").autocomplete({
+    source: [
+{% for data in Datasets %}
+    {% if forloop.last %}
+        "{{ data.name }}"
+    {% else %}
+        "{{ data.name }}",
+    {% endif %}
+{% endfor %}    
+    ]
+});
+  });
+  </script>
+{% endblock %}	
+{% block content %}
+
+<form action="" method="post">
+
+	<label for="tags">Tags: </label><input id="autocomplete" />
+</form>
+
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCBo3eZFzgJ_u2Wz7ZOVeHz24wjgpmsMGE" type="text/javascript"></script>
-  </head>
   <body onunload="GUnload()">
 
     <div id="map" style="width: 750px; height: 600px"></div>
@@ -108,9 +129,7 @@
     }
 
     </script>
-  </body>
-</html>
-
   </div>
 
 {% endblock %}
+

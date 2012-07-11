@@ -19,7 +19,7 @@ def run():
 
     # clean up if necessary
     cat = Category.objects.filter(name__startswith='Test')
-    if len(cat)>0:
+    if cat:
         cat.delete()
     # create the test Category
     cat = Category(name="Test")
@@ -28,7 +28,7 @@ def run():
 
     # clean up if necessary
     dat = Dataset.objects.filter(name__startswith='Test')
-    if len(dat)>0:
+    if dat:
         dat.delete()
     
     # create 3 test Datasets
@@ -42,7 +42,7 @@ def run():
 
     # clean up if necessary
     ran = Range.objects.filter(name__startswith='Test')
-    if len(ran)>0:
+    if ran:
         ran.delete()
     # create the test Ranges
     ran = Range(dataset=dat1, name="Test Low Range", low=0, high=9, color=GREEN)

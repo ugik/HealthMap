@@ -1,32 +1,13 @@
 {% extends 'base.html' %}
-<title>Health Map</title>
-
 {% block extrahead %}
-  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-  
-  <script>
-  $(document).ready(function() {
-    $("input#autocomplete").autocomplete({
-    source: [
-{% for data in Datasets %}
-    {% if forloop.last %}
-        "{{ data.name }}"
-    {% else %}
-        "{{ data.name }}",
-    {% endif %}
-{% endfor %}    
-    ]
-});
-  });
-  </script>
-{% endblock %}	
+{% include "autocomplete.html" %}
+{% endblock %}
+	
 {% block content %}
 
-<form action="" method="post">
-
-	<label for="tags">Tags: </label><input id="autocomplete" />
+<form action="/lookup/" method="post">
+{% csrf_token %}
+	<label for="tags">Tags: </label>{{ form.autocomplete }}<input type="submit" value="Map" alt="Map"/>
 </form>
 
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCBo3eZFzgJ_u2Wz7ZOVeHz24wjgpmsMGE" type="text/javascript"></script>
@@ -45,14 +26,8 @@
     //<![CDATA[
 
     if (GBrowserIsCompatible()) {
-
       var polys = [];
       var labels = [];
-
-
-      // === A method for testing if a point is inside a polygon
-      // === Returns true if poly contains point
-      // === Algorithm shamelessly stolen from http://alienryderflex.com/polygon/ 
       GPolygon.prototype.Contains = function(point) {
         var j=0;
         var oddNodes = false;
@@ -72,8 +47,6 @@
         }
         return oddNodes;
       }
-
-
 
       // Display the map, with some controls and set the initial location 
       var map = new GMap2(document.getElementById("map"));

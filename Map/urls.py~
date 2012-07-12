@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^$', 'HealthMap.views.HomePage'),
-    (r'dataset_lookup/$','Map.HealthMap.views.dataset_lookup'),
+    (r'^asd/$', 'HealthMap.views.LookupRequest'),
+    (r'dataset_lookup/$','HealthMap.views.dataset_lookup'),
     url(r'^admin/', include(admin.site.urls)),
 )

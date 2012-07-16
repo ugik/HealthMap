@@ -65,7 +65,7 @@ class Datarow(models.Model):
     region = models.ForeignKey('Region', db_index=True)
     value = models.DecimalField(max_digits=12, decimal_places=3)
     def color(self):
-        return_color = "#FFFFFF"
+        return_color = "#FFFFF0"    # default color is 'Ivory'
         for range in self.dataset.range_set.all():
             if self.value>range.low and self.value<range.high:
                 return_color = range.color

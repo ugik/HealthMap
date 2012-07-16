@@ -57,6 +57,8 @@ class Range(models.Model):
     color = models.CharField(max_length=7)   # eg. #AAA000
     def __unicode__(self):
         return self.name
+    class Meta:
+        ordering = ['low']
 
 class Datarow(models.Model):
     dataset = models.ForeignKey('Dataset', db_index=True)

@@ -1,5 +1,5 @@
 from django import forms
 
 class LookupForm(forms.Form):
-    autocomplete                   = forms.CharField(id='autocomplate')
+    autocomplete                   = forms.CharField(max_length=50)
 

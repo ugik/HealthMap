@@ -1,6 +1,6 @@
 	<style>
 	.ui-autocomplete {
-		max-height: 150px;
+		max-height: 225px;
 		overflow-y: auto;
 		overflow-x: hidden;
 		padding-right: 20px;
@@ -11,7 +11,7 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
   <script>
   $(document).ready(function() {
-    $("input#autocomplete").autocomplete({
+    $("input#id_autocomplete").autocomplete({
     source: [
 {% for data in Datasets %}
     {% if forloop.last %}

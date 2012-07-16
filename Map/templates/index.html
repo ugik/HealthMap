@@ -106,7 +106,16 @@
     {% for line in row.region.polyline_set.all %}
                pts[i++] = new GLatLng(parseFloat({{ line.lat }}), parseFloat({{ line.lng }}));
     {% endfor %}
+    {%  if row.color == "#FFFFF0" %}
+            // got back default color so let's use default range
+            {% for range in dataset_range %}
+                {% if row.value|rjust:11 >= range.low|rjust:11 and row.value|rjust:11 <= range.high|rjust:11 %}
+                    var poly = new GPolygon(pts,line_color,1,1,"{{ range.color }}",opaque,{clickable:false});
+                {% endif %}
+            {% endfor %}
+    {% else %}
             var poly = new GPolygon(pts,line_color,1,1,"{{ row.color }}",opaque,{clickable:false});
+    {% endif %}
             polys.push(poly);
             labels.push("{{ row.region.state }}");
             map.addOverlay(poly);

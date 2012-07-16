@@ -1,25 +1,51 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.http import HttpResponse
-from HealthMap.models import Dataset, Datarow, Region, Polyline
+from HealthMap.models import Dataset, Datarow, Region, Polyline, Range
 from HealthMap.forms import LookupForm
 import simplejson
 import urllib
 
 def HomePage(request):
-    dataset = Dataset.objects.get(name='Empty')   # use empty dataset by default
+    empty_dataset = Dataset.objects.get(name='Empty') 
     dataset_id = request.GET.get('id')    # Dataset passed as URL param
+    dataset = empty_dataset     # use empty dataset as default
 
     if dataset_id!=None:
         data = Dataset.objects.filter(id=dataset_id)
-        if not data:
-            dataset = Dataset.objects.get(name='Empty')
-        else:
+        if data:
             dataset = data[0]
+
+    dataset_range = Range.objects.filter(dataset=dataset)
+    if not dataset_range:       # establish a default range from the Empty dataset
+        # create a list of objects to mimic a dataset range using default range from Empty dataset
+        class range_mimic(object):
+            def __init__(self, name=None, low=None, high=None, color=None):
+                self.name = name
+                self.low = low
+                self.high = high
+                self.color = color
+
+        row = dataset.datarow_set.all().order_by('value')
+        dataset_range = []
+        default_range = Range.objects.filter(dataset=empty_dataset)
+        range_name = ['Low', 'Low-Mid', 'Mid', 'Mid-High', 'High', 'Very High']
+        range_elements = 6
+        for i in range(range_elements):      # assume legend of 6 elements
+            if i==range_elements-1:
+                dataset_range.append(range_mimic(name=range_name[i],
+                                                                          low=row[row.count()/6*i], 
+                                                                          high=row[row.count()-1],
+                                                                          color=default_range[i].color))
+            else:
+                dataset_range.append(range_mimic(name=range_name[i], 
+                                                                           low=row[row.count()/6*i],
+                                                                           high=row[row.count()/6*(i+1)],
+                                                                           color=default_range[i].color))
 
 #    print("Dataset:%s" % dataset.name)
     form = LookupForm()
-    context = ({'form': form, 'dataset': dataset, 'Datasets': Dataset.objects.all()})
+    context = ({'form': form, 'dataset': dataset, 'Datasets': Dataset.objects.all(), 'dataset_range': dataset_range})
     return render_to_response('index.html', context, context_instance=RequestContext(request))
 
 

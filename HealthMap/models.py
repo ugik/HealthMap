@@ -28,7 +28,7 @@ class Category(models.Model):
 
 class Dataset(models.Model):
     category = models.ForeignKey('Category')
-    name = models.CharField(max_length=20, db_index=True)
+    name = models.CharField(max_length=60, db_index=True)
     legend = models.CharField(max_length=25, blank=True)
     description = models.TextField(blank=True)
     imageURL = models.URLField(blank=True)
@@ -57,6 +57,8 @@ class Range(models.Model):
     color = models.CharField(max_length=7)   # eg. #AAA000
     def __unicode__(self):
         return self.name
+    class Meta:
+        ordering = ['low']
 
 class Datarow(models.Model):
     dataset = models.ForeignKey('Dataset', db_index=True)

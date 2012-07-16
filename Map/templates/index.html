@@ -22,7 +22,7 @@
 
     {% for range in dataset.range_set.all %}
     <tr><td><font size=2>
-     <span style="background-color:{{ range.color }}">_ </span>
+     <span style="background-color:{{ range.color }}">&nbsp;&nbsp;&nbsp;&nbsp; </span> &nbsp;
         {{ range.name }}</td><tr><td><font size=2>
         {{ range.low }} - {{ range.high }}
     </font></td></tr>
@@ -89,7 +89,7 @@
 
       // defaults
       var line_color = "#AAA000";
-      var opaque = 0.5;
+      var opaque = 0.85;
       
       // working vars
       var color = "";

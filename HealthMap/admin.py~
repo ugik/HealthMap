@@ -2,14 +2,14 @@ from django.contrib import admin
 from HealthMap.models import *
         
 class RangeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'low', 'high', 'dataset')
+    list_display = ('low', 'high', 'name', 'dataset')
     search_fields = ['name']
-    ordering = ('name',)
+    ordering = ('low',)
 
 class DatarowAdmin(admin.ModelAdmin):
-    list_display = ('dataset', 'value')
-    search_fields = ['dataset']
-    ordering = ('dataset',)
+    list_display = ('dataset', 'region', 'value')
+    search_fields = ['dataset', 'region',]
+    ordering = ('dataset', 'region',)
     
 admin.site.register(Region)
 admin.site.register(Polyline)

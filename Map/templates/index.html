@@ -24,7 +24,7 @@
     <tr><td><font size=2>
      <span style="background-color:{{ range.color }}">&nbsp;&nbsp;&nbsp;&nbsp; </span> &nbsp;
         {{ range.name }}</td><tr><td><font size=2>
-        {{ range.low }} - {{ range.high }}
+        {{ range.low|floatformat:1 }} - {{ range.high|floatformat:1 }}
     </font></td></tr>
     {% endfor %}
     </table>

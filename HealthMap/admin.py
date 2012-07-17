@@ -10,8 +10,13 @@ class DatarowAdmin(admin.ModelAdmin):
     list_display = ('dataset', 'region', 'value')
     search_fields = ['dataset']
     ordering = ('dataset', 'region',)
+
+class RegionAdmin(admin.ModelAdmin):
+    list_display = ('state', 'county')
+    search_fields = ['state']
+    ordering = ('state',)
     
-admin.site.register(Region)
+admin.site.register(Region, RegionAdmin)
 admin.site.register(Polyline)
 admin.site.register(Category)
 admin.site.register(Dataset)

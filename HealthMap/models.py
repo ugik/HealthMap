@@ -2,9 +2,10 @@ from django.db import models
 import datetime
 
 class Region(models.Model):
-    state = models.CharField(max_length=2, verbose_name='state', db_index=True, unique=True)
-    stateName = models.CharField(max_length=25, verbose_name='state name')
-    county = models.CharField(max_length=25, blank=True, db_index=True)
+    state = models.CharField(max_length=2, verbose_name='state', db_index=True)
+    stateName = models.CharField(max_length=50, verbose_name='state name')
+    county = models.CharField(max_length=50, blank=True, db_index=True)
+    fips = models.CharField(max_length=5, blank=True)
     imageURL = models.URLField(blank=True)
     def __unicode__(self):
         return u'state:%s (county:%s)' % (self.state, self.county)

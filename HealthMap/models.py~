@@ -2,9 +2,10 @@ from django.db import models
 import datetime
 
 class Region(models.Model):
-    state = models.CharField(max_length=2, verbose_name='state', db_index=True, unique=True)
+    state = models.CharField(max_length=2, verbose_name='state', db_index=True)
     stateName = models.CharField(max_length=25, verbose_name='state name')
-    county = models.CharField(max_length=25, blank=True, db_index=True)
+    county = models.CharField(max_length=50, blank=True, db_index=True)
+    fips = models.CharField(max_length=5, blank=True)
     imageURL = models.URLField(blank=True)
     def __unicode__(self):
         return u'state:%s (county:%s)' % (self.state, self.county)
@@ -65,7 +66,7 @@ class Datarow(models.Model):
     region = models.ForeignKey('Region', db_index=True)
     value = models.DecimalField(max_digits=12, decimal_places=3)
     def color(self):
-        return_color = "#FFFFFF"
+        return_color = "#FFFFF0"    # default color is 'Ivory'
         for range in self.dataset.range_set.all():
             if self.value>range.low and self.value<range.high:
                 return_color = range.color

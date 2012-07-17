@@ -8,7 +8,7 @@ class RangeAdmin(admin.ModelAdmin):
 
 class DatarowAdmin(admin.ModelAdmin):
     list_display = ('dataset', 'region', 'value')
-    search_fields = ['dataset', 'region',]
+    search_fields = ['dataset']
     ordering = ('dataset', 'region',)
     
 admin.site.register(Region)

@@ -3,7 +3,7 @@ import datetime
 
 class Region(models.Model):
     state = models.CharField(max_length=2, verbose_name='state', db_index=True)
-    stateName = models.CharField(max_length=25, verbose_name='state name')
+    stateName = models.CharField(max_length=50, verbose_name='state name')
     county = models.CharField(max_length=50, blank=True, db_index=True)
     fips = models.CharField(max_length=5, blank=True)
     imageURL = models.URLField(blank=True)

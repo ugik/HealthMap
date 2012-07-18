@@ -70,6 +70,7 @@ class Datarow(models.Model):
         for range in self.dataset.range_set.all():
             if self.value>range.low and self.value<range.high:
                 return_color = range.color
+                break
         return unicode(return_color)
     def __unicode__(self):
         return unicode(self.value)

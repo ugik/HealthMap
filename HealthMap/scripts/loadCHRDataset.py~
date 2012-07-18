@@ -225,7 +225,7 @@ def run():
                     val = sheet.cell(row_index,col_index).value
                     print("data for Region:%s, [%s] (%s) Dataset:%s" % (reg[0].state, col_index, str(val).strip(), col[col_index]))
                     # create Datarow if there is value
-                    if len(str(val)).strip()>0:
+                    if len(str(val).strip())>0:
                         row = Datarow(dataset=dat[0], region=reg[0], value=val)
                         row.save()
 

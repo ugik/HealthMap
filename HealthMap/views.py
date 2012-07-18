@@ -3,8 +3,9 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from HealthMap.models import Dataset, Datarow, Region, Polyline, Range
 from HealthMap.forms import LookupForm
-import simplejson
+import json
 import urllib
+import sys
 
 def HomePage(request):
     empty_dataset = Dataset.objects.get(name='Empty') 
@@ -65,7 +66,7 @@ def LookupRequest(request):
     return render_to_response('index.html', context, context_instance=RequestContext(request))
         
 
-def dataset_lookup(request):
+def dataset__lookup(request):
     print "In Dataset lookup"
     dataset = Dataset.objects.all()
     results = []
@@ -73,4 +74,37 @@ def dataset_lookup(request):
         dataset_dict = {'id':data.id, 'label':data.name, 'value':data.name}
         results.append(dataset_dict)
     return HttpResponse(simplejson.dumps(results),mimetype='application/json')
+
+def dataset_lookup(request):
+    try:
+        if request.is_ajax():
+            q = request.GET.get('term', '')
+            data = Dataset.objects.filter(name__icontains = q )[:20]
+            print("q:%s  rows:%s" % (q, len(data)))
+            results = []
+            for d in data:
+                data_json = {}
+                data_json['id'] = d.id
+                data_json['label'] = d.name
+                data_json['value'] = d.name
+                results.append(data_json)
+            return_data = json.dumps(results)
+            print("Results: %s" % len(results))
+        else:
+            return_data = 'fail'
+        mimetype = 'application/json'
+        return HttpResponse(return_data, mimetype)
+    except Exception, e:
+        print e
+
+
+
+
+
+
+
+
+
+
+
 

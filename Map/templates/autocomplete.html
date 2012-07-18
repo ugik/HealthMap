@@ -12,14 +12,7 @@
   <script>
   $(document).ready(function() {
     $("input#id_autocomplete").autocomplete({
-    source: [
-{% for data in Datasets %}
-    {% if forloop.last %}
-        "{{ data.name }}"
-    {% else %}
-        "{{ data.name }}",
-    {% endif %}
-{% endfor %}    
-                ]});
+    source: "/dataset_lookup/",
+    minLength: 2, });
      });
   </script>

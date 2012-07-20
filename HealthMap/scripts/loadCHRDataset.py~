@@ -2,17 +2,6 @@ from HealthMap.models import Region, Dataset, Datarow, Category, Range
 from xlrd import open_workbook,cellname
 
 def run():
-# colors:
-    DARK_GREEN="#006600"
-    GREEN="#009900"
-    LIGHT_GREEN="#33FF66"
-    LIGHT_YELLOW="#FFFF66"
-    YELLOW="#FFFF00"
-    ORANGE="#FFFC00"
-    LIGHT_RED="#FFF900"
-    RED="#FFF000"
-    DARK_RED="#CC0000"
-    DARK="#333333"
 
     col = [None] * 60
     cat = [None] * 60

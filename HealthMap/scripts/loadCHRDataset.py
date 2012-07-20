@@ -48,7 +48,7 @@ def run():
     col[15] = "Uninsured under 65 (%)"
     cat[15] = "Economic"
     
-    col[17] = "Primary Care Physicians (# per 100,000)"
+    col[17] = "Primary Care Physicians (population per PCP)"
     cat[17] = "Environment"
     
     col[18] = "ACSC Medicare Preventable Hospital Stays (# per 1,000)"
@@ -134,7 +134,7 @@ def run():
     col[44] = "HIV Cases (#)"
     cat[44] = "Demographic"
 
-    col[46] = "Primary Care Physicians Ratio (# people per PCP)"
+    col[46] = "Primary Care Physicians Ratio (population per PCP)"
     cat[46] = "Demographic"
 
     col[47] = "Uninsured Adults (%)"

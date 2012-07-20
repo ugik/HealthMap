@@ -17,7 +17,32 @@ def HomePage(request):
         if data:
             dataset = data[0]
 
-    dataset_range = datasetRange(dataset)   # figure out what our ranges are (explicit or implicit)
+    dataset_range = Range.objects.filter(dataset=dataset)
+    if not dataset_range:       # establish a default range from the Empty dataset
+        # create a list of objects to mimic a dataset range using default range from Empty dataset
+        class range_mimic(object):
+            def __init__(self, name=None, low=None, high=None, color=None):
+                self.name = name
+                self.low = low
+                self.high = high
+                self.color = color
+
+        row = dataset.datarow_set.all().order_by('value')
+        dataset_range = []
+        default_range = Range.objects.filter(dataset=empty_dataset)
+        range_name = ['Low', 'Low-Mid', 'Mid', 'Mid-High', 'High', 'Very High']
+        range_elements = 6
+        for i in range(range_elements):      # assume legend of 6 elements
+            if i==range_elements-1:
+                dataset_range.append(range_mimic(name=range_name[i],
+                                                                          low=row[row.count()/6*i], 
+                                                                          high=row[row.count()-1],
+                                                                          color=default_range[i].color))
+            else:
+                dataset_range.append(range_mimic(name=range_name[i], 
+                                                                           low=row[row.count()/6*i],
+                                                                           high=row[row.count()/6*(i+1)],
+                                                                           color=default_range[i].color))
 
 #    print("Dataset:%s" % dataset.name)
     form = LookupForm()
@@ -47,28 +72,27 @@ def dataset_gis(request):
         dataset_id = request.GET.get('id', '')
         print ("id: %s" % int(dataset_id))
         dataset = Dataset.objects.get(id=int(dataset_id))
-        dataset_range = datasetRange(dataset)
         results = []
-        for row in dataset.datarow_set.all():
+        for row in dataset.datarow_set.all()
             data = {}
             data['state'] = row.region.state
             if row.color=="#FFFFF0":
                 for range in dataset_range:
-                    if row.value >= range.low and row.value <= range.high:
+                    if row.value >= range.low and row.value <= range.high
                         data['color'] = range.color
-                        break
+                        break            
             else:
                 data['color'] = row.color
             
-            for line in row.region.polyline_set.all():
-                pts = {}
-                pts['lat'] = line.lat
-                pts['lng'] = line.lng
-                data['pts'] = pts
-
-            results.append(data)
+            for line in row.region.polyline_set.all()
+                        
+            for d in data:
+                data_json = {}
+                data_json['value'] = d.name
+                results.append(data)
 
         return_data = json.dumps(results)
+    
         return HttpResponse(return_data, mimetype='application/javascript')
     except Exception, e:
         print e
@@ -97,34 +121,7 @@ def dataset_lookup(request):
     except Exception, e:
         print e
 
-def datasetRange(dataset):
-    dataset_range = Range.objects.filter(dataset=dataset)
-    if not dataset_range:       # establish a default range from the Empty dataset
-        # create a list of objects to mimic a dataset range using default range from Empty dataset
-        class range_mimic(object):
-            def __init__(self, name=None, low=None, high=None, color=None):
-                self.name = name
-                self.low = low
-                self.high = high
-                self.color = color
 
-        row = dataset.datarow_set.all().order_by('value')
-        dataset_range = []
-        default_range = Range.objects.filter(dataset=empty_dataset)
-        range_name = ['Low', 'Low-Mid', 'Mid', 'Mid-High', 'High', 'Very High']
-        range_elements = 6
-        for i in range(range_elements):      # assume legend of 6 elements
-            if i==range_elements-1:
-                dataset_range.append(range_mimic(name=range_name[i],
-                                                                          low=row[row.count()/6*i], 
-                                                                          high=row[row.count()-1],
-                                                                          color=default_range[i].color))
-            else:
-                dataset_range.append(range_mimic(name=range_name[i], 
-                                                                           low=row[row.count()/6*i],
-                                                                           high=row[row.count()/6*(i+1)],
-                                                                           color=default_range[i].color))
-    return dataset_range
 
 
 

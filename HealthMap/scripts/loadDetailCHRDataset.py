@@ -3,8 +3,8 @@ from xlrd import open_workbook,cellname
 
 def run():
 
-    region = ["Texas", "Oklahoma", "New Mexico", "Arizona"]   # SouthWest
-    region_name = "SouthWest"
+    region = ["North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri"]   
+    region_name = "Heartland"
 
     col = [None] * 60
     cat = [None] * 60

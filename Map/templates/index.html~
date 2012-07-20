@@ -31,6 +31,21 @@
 {% endif %}
 </div>
 
+
+<script type='text/javascript'>
+$(document).ready(function(){
+    $.getJSON('json_test/?id=3', 
+        function(data) {
+            for (i in data)
+            {
+                document.write(data[i].value + "<br />");
+            }
+    });
+ });
+    
+</script>
+
+
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCBo3eZFzgJ_u2Wz7ZOVeHz24wjgpmsMGE" type="text/javascript"></script>
   <body onunload="GUnload()">
 
@@ -89,7 +104,7 @@
 
       // defaults
       var line_color = "#AAA000";
-      var opaque = 0.25;
+      var opaque = 0.75;
       
       // working vars
       var color = "";
@@ -101,7 +116,7 @@
             color = "#FFF000";
             pts = [];
             i = 0;
-
+        
     // Polylines for a region
     {% for line in row.region.polyline_set.all %}
                pts[i++] = new GLatLng(parseFloat({{ line.lat }}), parseFloat({{ line.lng }}));
@@ -122,7 +137,7 @@
     {% endif %}
 {% endfor %}
 
-      request.send(null);
+//      request.send(null);
 
     }
     

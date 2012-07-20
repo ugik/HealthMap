@@ -97,15 +97,13 @@
       var pts = [];
       var i = 0;
 
-      $.getJSON('dataset_gis/?id=16', 
+      $.getJSON('dataset_gis/?id={{ dataset.id }}', 
       function(data) {
-          alert(data.length);
-
           for (var row=0; row<data.length; row++)    {
             pts = [];
             for (var line=0; line<data[row].points.length; line++)
                 {   pts[line] = new GLatLng(parseFloat(data[row].points[line].lat), parseFloat(data[row].points[line].lng));   } 
-            var poly = new GPolygon(pts, line_color, 1,1, data[row].color,opaque, {clickable:false});
+            var poly = new GPolygon(pts, line_color, 1,1, data[row].color, opaque, {clickable:false});
             polys.push(poly);
             labels.push(data[row].state + 'County:' + data[row].county);
             map.addOverlay(poly);

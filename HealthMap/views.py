@@ -55,9 +55,13 @@ def dataset_gis(request):
             data['state'] = row.region.state
             data['county'] = row.region.county
             if row.color()=="#FFFFF0":
-                for range in dataset_range:
-                    if row.value >= range.low and row.value <= range.high:
-                        data['color'] = range.color
+                for ran in dataset_range:
+#                    print("[%s] low:%s high:%s" % (row.value, ran.low, ran.high))
+#                    print("row value:%s  low/high:%s" % (row.value.__class__, ran.low.__class__))
+                    if row.value >= ran.low.value and row.value <= ran.high.value:
+                        data['color'] = ran.color
+                        if data['county'] == 'Dukes':
+                            print("range color:%s  data color:%s" % (row.color(), data['color'] ))
                         break
             else:
                 data['color'] = row.color()

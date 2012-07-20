@@ -32,20 +32,6 @@
 </div>
 
 
-<script type='text/javascript'>
-$(document).ready(function(){
-    $.getJSON('json_test/?id=3', 
-        function(data) {
-            for (i in data)
-            {
-                document.write(data[i].value + "<br />");
-            }
-    });
- });
-    
-</script>
-
-
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCBo3eZFzgJ_u2Wz7ZOVeHz24wjgpmsMGE" type="text/javascript"></script>
   <body onunload="GUnload()">
 
@@ -111,34 +97,22 @@ $(document).ready(function(){
       var pts = [];
       var i = 0;
 
-{% for row in dataset.datarow_set.all %}
-    {% if row.region.state != "OO" %}
-            color = "#FFF000";
+      $.getJSON('dataset_gis/?id=16', 
+      function(data) {
+          alert(data.length);
+
+          for (var row=0; row<data.length; row++)    {
             pts = [];
-            i = 0;
-        
-    // Polylines for a region
-    {% for line in row.region.polyline_set.all %}
-               pts[i++] = new GLatLng(parseFloat({{ line.lat }}), parseFloat({{ line.lng }}));
-    {% endfor %}
-    {%  if row.color == "#FFFFF0" %}
-            // got back default color so let's use default range
-            {% for range in dataset_range %}
-                {% if row.value|rjust:11 >= range.low|rjust:11 and row.value|rjust:11 <= range.high|rjust:11 %}
-                    var poly = new GPolygon(pts,line_color,1,1,"{{ range.color }}",opaque,{clickable:false});
-                {% endif %}
-            {% endfor %}
-    {% else %}
-            var poly = new GPolygon(pts,line_color,1,1,"{{ row.color }}",opaque,{clickable:false});
-    {% endif %}
+            for (var line=0; line<data[row].points.length; line++)
+                {   pts[line] = new GLatLng(parseFloat({{ line.lat }}), parseFloat({{ line.lng }}));   } 
+            var poly = new GPolygon(pts, line_color, 1,1, data[row].color,opaque, {clickable:false});
             polys.push(poly);
-            labels.push("{{ row.region.state }}");
+            labels.push(data[row].state + 'County:' + data[row].county);
             map.addOverlay(poly);
-    {% endif %}
-{% endfor %}
+          };
 
-//      request.send(null);
-
+      });
+    
     }
     
     // display a warning if the browser was not compatible

@@ -1,41 +1,55 @@
-<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-<title>Health Map</title>
-
 {% extends 'base.html' %}
 {% block extrahead %}
-<link rel="stylesheet" href="/static/css/ui-lightness/jquery-ui-1.8.21.custom.css" type="text/css" media="screen"/>    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js" type="text/javascript"></script>
-	<script>
-	$(function() {
-		var availableTags = [
-    {% for data in Dataset.objects.all %}
-        "{{ data.name }}",
-    {% endfor %}
-    ""
-		];
-	});
-		$( "#tags" ).autocomplete({
-			source: availableTags
-		});
-	});
-	</script>
-{% endblock %}	
+{% include "autocomplete.html" %}
+{% endblock %}
+	
 {% block content %}
 
-<form action="" method="post">
-
-    <div id='home_page'>
-    <table><tr><td>
-
-	<div class="tags">
-	<label for="tags">Tags: </label>
-	<input id="tags"/>
-    </div>
-   </td>
-    </tr>
-    </table>
+<form action="/lookup/" method="post">
+{% csrf_token %}
+	<label for="tags">Tags: </label>{{ form.autocomplete }}<input type="submit" value="Map" alt="Map"/>
 </form>
+
+<div id='datasetInfo'>
+{%  if dataset.name != "Empty" %}
+    Map: <b>{{ dataset.name }} </b> <br>
+    {{ dataset.description }} <br>
+    {% if dataset.imageURL|length > 0 %}
+        <img src="{{ dataset.imageURL }}" alt="Dataset image" height="100" width="100" /> 
+    {% endif %}
+    <br>
+    <table>
+
+    {% for range in dataset_range %}
+    <tr><td><font size=2>
+     <span style="background-color:{{ range.color }}">&nbsp;&nbsp;&nbsp;&nbsp; </span> &nbsp;
+        {{ range.name }}</td><tr><td><font size=2>
+        {{ range.low|floatformat:1 }} - {{ range.high|floatformat:1 }}
+    </font></td></tr>
+    {% endfor %}
+    </table>
+{% endif %}
+</div>
+
+
+<script type='text/javascript'>
+$(document).ready(function(){
+    $.getJSON('dataset_gis/?id=16', 
+        function(data) {
+            alert(data.length);
+            for (row in data)
+            {
+                document.write(data[row].state + "<br />");
+                for (line in data[row].points)
+                {
+                    document.write(data[row].points[line].lat + " - ");
+                }
+            }
+    });
+ });
+    
+</script>
+
 
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCBo3eZFzgJ_u2Wz7ZOVeHz24wjgpmsMGE" type="text/javascript"></script>
   <body onunload="GUnload()">
@@ -53,14 +67,8 @@
     //<![CDATA[
 
     if (GBrowserIsCompatible()) {
-
       var polys = [];
       var labels = [];
-
-
-      // === A method for testing if a point is inside a polygon
-      // === Returns true if poly contains point
-      // === Algorithm shamelessly stolen from http://alienryderflex.com/polygon/ 
       GPolygon.prototype.Contains = function(point) {
         var j=0;
         var oddNodes = false;
@@ -80,8 +88,6 @@
         }
         return oddNodes;
       }
-
-
 
       // Display the map, with some controls and set the initial location 
       var map = new GMap2(document.getElementById("map"));
@@ -103,7 +109,7 @@
 
       // defaults
       var line_color = "#AAA000";
-      var opaque = 0.5;
+      var opaque = 0.75;
       
       // working vars
       var color = "";
@@ -115,19 +121,28 @@
             color = "#FFF000";
             pts = [];
             i = 0;
-
+        
     // Polylines for a region
     {% for line in row.region.polyline_set.all %}
                pts[i++] = new GLatLng(parseFloat({{ line.lat }}), parseFloat({{ line.lng }}));
     {% endfor %}
+    {%  if row.color == "#FFFFF0" %}
+            // got back default color so let's use default range
+            {% for range in dataset_range %}
+                {% if row.value|rjust:11 >= range.low|rjust:11 and row.value|rjust:11 <= range.high|rjust:11 %}
+                    var poly = new GPolygon(pts,line_color,1,1,"{{ range.color }}",opaque,{clickable:false});
+                {% endif %}
+            {% endfor %}
+    {% else %}
             var poly = new GPolygon(pts,line_color,1,1,"{{ row.color }}",opaque,{clickable:false});
+    {% endif %}
             polys.push(poly);
             labels.push("{{ row.region.state }}");
             map.addOverlay(poly);
     {% endif %}
 {% endfor %}
 
-      request.send(null);
+//      request.send(null);
 
     }
     

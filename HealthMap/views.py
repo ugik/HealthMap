@@ -45,28 +45,34 @@ def LookupRequest(request):
 def dataset_gis(request):
     try:
         dataset_id = request.GET.get('id', '')
-        print ("id: %s" % int(dataset_id))
         dataset = Dataset.objects.get(id=int(dataset_id))
         dataset_range = datasetRange(dataset)
+
         results = []
+        print("rows:%s" % len(dataset.datarow_set.all()))
         for row in dataset.datarow_set.all():
             data = {}
             data['state'] = row.region.state
-            if row.color=="#FFFFF0":
+            data['county'] = row.region.county
+            if row.color()=="#FFFFF0":
                 for range in dataset_range:
                     if row.value >= range.low and row.value <= range.high:
                         data['color'] = range.color
                         break
             else:
-                data['color'] = row.color
+                data['color'] = row.color()
             
+            points = []
             for line in row.region.polyline_set.all():
                 pts = {}
-                pts['lat'] = line.lat
-                pts['lng'] = line.lng
-                data['pts'] = pts
+                pts['lat'] = str(line.lat)
+                pts['lng'] = str(line.lng)
+                points.append(pts)
 
+            data['points'] = points    # points array within the data array
             results.append(data)
+
+        print ("dataset:%s  rows:%s" % (dataset.name, len(results)))
 
         return_data = json.dumps(results)
         return HttpResponse(return_data, mimetype='application/javascript')
@@ -97,6 +103,7 @@ def dataset_lookup(request):
     except Exception, e:
         print e
 
+# figure out a range to use for legend
 def datasetRange(dataset):
     dataset_range = Range.objects.filter(dataset=dataset)
     empty_dataset = Dataset.objects.get(name='Empty') 

@@ -3,8 +3,41 @@ from xlrd import open_workbook,cellname
 
 def run():
 
-    region = ["North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri"]   
-    region_name = "Heartland"
+#    region = ["Washingtom", "Oregan", "California"]   
+#    region_name = "Pacific Coast"
+
+#    region = ["Nevada", "Idaho", "Utah", "Colorado", "Wyoming", "Montana"]   
+#    region_name = "Mountain"
+
+#    region = ["Arizone", "New Mexico", "Texas", "Oklahoma"]   
+#    region_name = "Southwest"
+
+#    region = ["North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri"]   
+#    region_name = "Heartland"
+
+#    region = ["Arkansas", "Louisiana", "Mississippi", "Alabama", "Georgia", "Florida", "South Carolina"]   
+#    region_name = "Southeast"
+
+#    region = ["Tennessee", "North Carolina", "Kentucky", "West Virginia", "Virginia"]   
+#    region_name = "Appalachian Highlands"
+
+#    region = ["Wisconsin", "Illinois", "Indiana", "Ohio", "Michigan"]   
+#    region_name = "Midwest"
+
+#    region = ["New York", "New Jersey", "Delaware", "Maryland", "District of Columbia"]   
+#    region_name = "Mid-Atlantic"
+
+#    region = ["Connecticut", "Rhode Island", "Massachusetts", "Vermont", "New Hampshire", "Maine"]   
+#    region_name = "New England"
+
+#    region = ["Alaska"]   
+#    region_name = "Alaska"
+
+#    region = ["Hawaii"]   
+#    region_name = "Hawaii"
+
+    region = ["Tennessee", "North Carolina", "Kentucky", "West Virginia", "Virginia"]   
+    region_name = "Appalachian Highlands"
 
     col = [None] * 60
     cat = [None] * 60
@@ -202,11 +235,15 @@ def run():
                     if proceed:
                         if not Dataset.objects.filter(name=dataset_name):
                             print("Creating Dataset: %s" % dataset_name)
+                            
                             dat = Dataset(category=cate[0], name=dataset_name)
                             dat.save()            
                         dat = Dataset.objects.filter(name=dataset_name)
                         val = sheet.cell(row_index,col_index).value
                         print("data for Region:%s/%s, (%s) Dataset:%s" % (reg[0].state, reg[0].county, str(val).strip(), dataset_name))
+                        row = Datarow.objects.filter(dataset=dat[0], region=reg[0])
+                        if row:     # cleanup if necessary
+                            row.delete()
                         # create Datarow if there is value
                         if len(str(val).strip())>0:
                             row = Datarow(dataset=dat[0], region=reg[0], value=val)

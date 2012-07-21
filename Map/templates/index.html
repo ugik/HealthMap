@@ -11,6 +11,7 @@
 </form>
 
 <div id='datasetInfo'>
+<img src="/static/images/wait.gif" id="wait" height="35" width="35" /> <br>
 {%  if dataset.name != "Empty" %}
     Map: <b>{{ dataset.name }} </b> <br>
     {{ dataset.description }} <br>
@@ -31,11 +32,10 @@
 {% endif %}
 </div>
 
-
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCBo3eZFzgJ_u2Wz7ZOVeHz24wjgpmsMGE" type="text/javascript"></script>
   <body onunload="GUnload()">
 
-    <div id="map" style="width: 750px; height: 600px"></div>
+    <div id="map" style="width: 750px; height: 600px">
 
     <noscript><b>JavaScript must be enabled in order for you to use Google Maps.</b> 
       However, it seems JavaScript is either disabled or not supported by your browser. 
@@ -100,17 +100,17 @@
       $.getJSON('dataset_gis/?id={{ dataset.id }}', 
       function(data) {
           for (var row=0; row<data.length; row++)    {
-            pts = [];
-            for (var line=0; line<data[row].points.length; line++)
+              pts = [];
+              for (var line=0; line<data[row].points.length; line++)
                 {   pts[line] = new GLatLng(parseFloat(data[row].points[line].lat), parseFloat(data[row].points[line].lng));   } 
-            var poly = new GPolygon(pts, line_color, 1,1, data[row].color, opaque, {clickable:false});
-            polys.push(poly);
-            labels.push(data[row].state + 'County:' + data[row].county);
-            map.addOverlay(poly);
+              var poly = new GPolygon(pts, line_color, 1,1, data[row].color, opaque, {clickable:false});
+              polys.push(poly);
+              labels.push(data[row].state + '  ' + data[row].county);
+              map.addOverlay(poly);
           };
+      document.getElementById('wait').style.visibility = 'hidden'; 
 
-      });
-    
+      });    
     }
     
     // display a warning if the browser was not compatible
@@ -119,6 +119,7 @@
     }
 
     </script>
+
   </div>
 
 {% endblock %}

@@ -29,7 +29,7 @@ class Category(models.Model):
 
 class Dataset(models.Model):
     category = models.ForeignKey('Category')
-    name = models.CharField(max_length=60, db_index=True)
+    name = models.CharField(max_length=80, db_index=True)
     legend = models.CharField(max_length=25, blank=True)
     description = models.TextField(blank=True)
     imageURL = models.URLField(blank=True)

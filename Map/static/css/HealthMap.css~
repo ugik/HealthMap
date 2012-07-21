@@ -19,9 +19,13 @@ body {
     min-height: 500px;
 }
 
+#id_autocomplete {
+    width: 500px;
+}
+
 #datasetInfo {
     position:fixed;
-    top:80px;
+    top:32px;
     right:30px;
     font-size: 13px;
     width: 190px;

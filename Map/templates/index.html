@@ -74,14 +74,18 @@
       var map = new GMap2(document.getElementById("map"));
       map.addControl(new GLargeMapControl());
       map.addControl(new GMapTypeControl());
-      map.setCenter(new GLatLng(33.1,-95),4);
+      {% if dataset.mapzoom != None %}
+          map.setCenter(new GLatLng({{ dataset.maplatitude }}, {{ dataset.maplongitude }}), {{ dataset.mapzoom }});
+      {% else %}
+          map.setCenter(new GLatLng(33.1,-95),4);
+      {% endif %}
 
 
       GEvent.addListener(map, "click", function(overlay,point) {
         if (!overlay) {
           for (var i=0; i<polys.length; i++) {
             if (polys[i].Contains(point)) {
-              map.openInfoWindowHtml(point,"You clicked on "+labels[i]);
+              map.openInfoWindowHtml(point,""+labels[i]);
               //i = 999; // Jump out of loop
             }
           }

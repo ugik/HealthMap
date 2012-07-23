@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Home</title>
+ 
+	<style type="text/css">
+ 
+		html,
+		body {
+			height: 100% ;
+			margin: 0px 0px 0px 0px ;
+			overflow: hidden ;
+			padding: 0px 0px 0px 0px ;
+			width: 100% ;
+			}
+ 
+		#mapContainer {
+			height: 100% ;
+			width: 100% ;
+			}
+ 
+	</style>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+</head>
+<body>
+ 
+ 
+	<div id="map">
+	</div>
+ 
+ 
+	<script type="text/javascript">
+ 
+    $.loadmap();
+    
+ var loadMap = function(){
+  var GM = google.maps, 
+      defaultPosition = new GM.LatLng(42, -71),
+      mapOptions = {
+      zoom: 12, 
+      center: defaultPosition, 
+      mapTypeId: GM.MapTypeId.ROADMAP},
+    map = new GM.Map( 
+      document.getElementById('map'), 
+      mapOptions
+    ), 
+    success = function( data ){
+      var position = new GM.LatLng( 
+        data.coords.latitude, 
+        data.coords.longitude 
+      ), 
+         niceAddress = 'Your location',
+         geocoder = new GM.Geocoder();
+      geocoder.geocode({ 
+        'latLng': position },
+         function( results, status ) {
+           if ( status == GM.GeocoderStatus.OK ){
+             if (results[0]) {
+               niceAddress = results[0].formatted_address; 
+             }
+           }
+           var infowindow = new GM.InfoWindow({
+             map: map, 
+             position: position, 
+             content: niceAddress
+           });
+         }
+       );
+      map.setCenter( position );
+    }, 
+    failure = function( error ){ 
+      var formResponse = function(){ 
+        var geocoder = new GM.Geocoder(),
+            position = defaultPosition, 
+            niceAddress = 'Sorry We Couldn't Find Your Location';
+        geocoder.geocode({
+     'address':document.getElementById('location').value 
+    }, 
+          function( results, status ) {
+            if ( status == GM.GeocoderStatus.OK ){ 
+              if (results[0]) {
+                niceAddress = results[0].formatted_address; 
+                position = new GM.LatLng(
+                  results[0].geometry.location.lat(),
+                  results[0].geometry.location.lng() 
+                )
+               } 
+             }
+             var options = {
+                map: map, 
+                position: position, 
+                content: niceAddress
+              },
+              infowindow = new google.maps.InfoWindow(options);
+              map.setCenter(options.position);
+              document.getElementById('geocode').style.display='none';
+           }
+         )
+       return false; 
+     } 
+     var fallback = document.createElement('form');
+     fallback.id='geocode';
+      if ( error ) {
+
+       switch(error.code) {
+
+         case error.PERMISSION_DENIED:
+
+     	    fallback.innerHTML += "<p>You chose not share geolocation data. Please, use the form below. </p>" ;  
+
+         break;  
+
+	 case error.POSITION_UNAVAILABLE:
+
+            fallback.innerHTML += "<p>Sorry, we couldn't determine your location. Please, use the form below. </p>" ;
+
+         break;  
+
+         case error.TIMEOUT: 
+
+            fallback.innerHTML += "<p>Sorry, the location request time out. Please, use the form below. </p>" ;
+
+         break;  
+
+         default: 
+
+            fallback.innerHTML += "<p>Sorry, there was an error. Please use the form below. </p>" ;
+
+         break;
+
+       }  	
+
+    }
+
+    fallback.innerHTML += "<label for='location'>Eneter Your Location <input type='text' id='location' /></label><input type='submit' />";
+
+    fallback.onsubmit = formResponse;
+
+    document.getElementById("main").appendChild( fallback );
+
+  };
+
+  if (navigator.geolocation){
+    navigator.geolocation.getCurrentPosition( success, failure, {timeout:5000} ) ;			
+  } else {
+    failure();	
+  } 	
+}
+ 
+	</script>
+ 
+</body>
+</html>

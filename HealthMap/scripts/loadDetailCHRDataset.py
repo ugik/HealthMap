@@ -3,13 +3,13 @@ from xlrd import open_workbook,cellname
 
 def run():
 
-#    region = ["Washingtom", "Oregan", "California"]   
+#    region = ["Washingtom", "Oregon", "California"]   
 #    region_name = "Pacific Coast"
 
 #    region = ["Nevada", "Idaho", "Utah", "Colorado", "Wyoming", "Montana"]   
 #    region_name = "Mountain"
 
-#    region = ["Arizone", "New Mexico", "Texas", "Oklahoma"]   
+#    region = ["Arizona", "New Mexico", "Texas", "Oklahoma"]   
 #    region_name = "Southwest"
 
 #    region = ["North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri"]   
@@ -20,6 +20,9 @@ def run():
 
 #    region = ["Tennessee", "North Carolina", "Kentucky", "West Virginia", "Virginia"]   
 #    region_name = "Appalachian Highlands"
+#    region_latitude = "36.597889"
+#    region_longitude = "-83.166504"
+#    region_zoom = "6"
 
 #    region = ["Wisconsin", "Illinois", "Indiana", "Ohio", "Michigan"]   
 #    region_name = "Midwest"
@@ -36,7 +39,7 @@ def run():
 #    region = ["Hawaii"]   
 #    region_name = "Hawaii"
 
-    region = ["Tennessee", "North Carolina", "Kentucky", "West Virginia", "Virginia"]   
+    region = []   
     region_name = "Appalachian Highlands"
 
     col = [None] * 60
@@ -214,6 +217,7 @@ def run():
         county = sheet.cell(row_index,2).value
         if len(state)>1 and len(county)<1:      # state data row
             print state
+                
         elif state in region:
             print ("Processing %s" % state)
             for col_index in range(sheet.ncols):
@@ -236,7 +240,8 @@ def run():
                         if not Dataset.objects.filter(name=dataset_name):
                             print("Creating Dataset: %s" % dataset_name)
                             
-                            dat = Dataset(category=cate[0], name=dataset_name)
+                            dat = Dataset(category=cate[0], name=dataset_name, 
+                                                  maplatitude=region_latitude, maplongitude=region_longitude, mapzoom=region_zoom)
                             dat.save()            
                         dat = Dataset.objects.filter(name=dataset_name)
                         val = sheet.cell(row_index,col_index).value

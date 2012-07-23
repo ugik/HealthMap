@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic.simple import direct_to_template
 
-# Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
 
@@ -9,5 +9,7 @@ urlpatterns = patterns('',
     (r'^lookup/$', 'HealthMap.views.LookupRequest'),
     url(r'^dataset_lookup/$','HealthMap.views.dataset_lookup', name='dataset_lookup'),
     url(r'^dataset_gis/$','HealthMap.views.dataset_gis', name='dataset_gis'),
+    (r'^home/$', direct_to_template, {'template': 'home.html', 'extra_context': {}}),
+
     url(r'^admin/', include(admin.site.urls)),
 )

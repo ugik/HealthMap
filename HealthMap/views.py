@@ -19,9 +19,8 @@ def HomePage(request):
 
     dataset_range = datasetRange(dataset)   # figure out what our ranges are (explicit or implicit)
 
-#    print("Dataset:%s" % dataset.name)
     form = LookupForm()
-    context = ({'form': form, 'dataset': dataset, 'Datasets': Dataset.objects.all(), 'dataset_range': dataset_range})
+    context = ({'form': form, 'dataset': dataset, 'dataset_range': dataset_range})
     return render_to_response('index.html', context, context_instance=RequestContext(request))
 
 
@@ -39,7 +38,7 @@ def LookupRequest(request):
 
     context = ({'form': form})
     return render_to_response('index.html', context, context_instance=RequestContext(request))
-        
+
 
 # provides gis data for dataset to render map polygons
 def dataset_gis(request):
@@ -58,7 +57,7 @@ def dataset_gis(request):
                 for ran in dataset_range:
 #                    print("[%s] low:%s high:%s" % (row.value, ran.low, ran.high))
 #                    print("row value:%s  low/high:%s" % (row.value.__class__, ran.low.__class__))
-                    if row.value >= ran.low.value and row.value <= ran.high.value:
+                    if row.value >= ran.low and row.value <= ran.high:
                         data['color'] = ran.color
                         if data['county'] == 'Dukes':
                             print("range color:%s  data color:%s" % (row.color(), data['color'] ))
@@ -129,13 +128,13 @@ def datasetRange(dataset):
         for i in range(range_elements):      # assume legend of 6 elements
             if i==range_elements-1:
                 dataset_range.append(range_mimic(name=range_name[i],
-                                                                          low=row[row.count()/6*i], 
-                                                                          high=row[row.count()-1],
+                                                                          low=row[row.count()/6*i].value, 
+                                                                          high=row[row.count()-1].value,
                                                                           color=default_range[i].color))
             else:
                 dataset_range.append(range_mimic(name=range_name[i], 
-                                                                           low=row[row.count()/6*i],
-                                                                           high=row[row.count()/6*(i+1)],
+                                                                           low=row[row.count()/6*i].value,
+                                                                           high=row[row.count()/6*(i+1)].value,
                                                                            color=default_range[i].color))
     return dataset_range
 

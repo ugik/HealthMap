@@ -5,6 +5,11 @@
 	
 {% block content %}
 
+<form action="/lookup/" method="post">
+{% csrf_token %}
+	<label for="tags">Tags: </label>{{ form.autocomplete }}<input type="submit" value="Map" alt="Map"/>
+</form>
+
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -14,12 +19,6 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 </script>
-
-<form action="/lookup/" method="post">
-{% csrf_token %}
-	<label for="tags">Tags: </label>{{ form.autocomplete }}<input type="submit" value="Map" alt="Map"/>
-</form>
-
 
 <div id='datasetInfo'>
 
@@ -42,6 +41,12 @@
     {% endfor %}
     </table>
 {% endif %}
+
+<br>
+<img src="/static/images/history_icon.png" id="history" alt="search history" height="35" width="35" /> 
+<a href="http://www.facebook.com/USHealthMap" target="_blank"><img src="/static/images/fb_icon.png" height="35" width="35" /></a>
+<a href= "mailto:info@healthmap.us" ><img src="/static/images/email_icon.png" id="email" alt="Email us" height="35" width="35" /></a>
+ <br>
 </div>
 
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCBo3eZFzgJ_u2Wz7ZOVeHz24wjgpmsMGE" type="text/javascript"></script>

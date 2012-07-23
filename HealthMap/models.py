@@ -81,7 +81,7 @@ class Datarow(models.Model):
         unique_together = ("dataset", "region")
 
 class History(models.Model):
-    name = models.CharField(max_length=15)
+    name = models.CharField(max_length=80)
     searched = models.DateTimeField(editable=False)
 
     def save(self, *args, **kwargs):

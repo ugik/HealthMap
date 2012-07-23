@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.http import HttpResponse
-from HealthMap.models import Dataset, Datarow, Region, Polyline, Range
+from HealthMap.models import Dataset, Datarow, Region, Polyline, Range, History
 from HealthMap.forms import LookupForm
 import json, simplejson
 import urllib
@@ -19,8 +19,12 @@ def HomePage(request):
 
     dataset_range = datasetRange(dataset)   # figure out what our ranges are (explicit or implicit)
 
+    if dataset.name != 'Empty':
+        history = History(name=dataset.name)
+        history.save()
+            
     form = LookupForm()
-    context = ({'form': form, 'dataset': dataset, 'Datasets': Dataset.objects.all(), 'dataset_range': dataset_range})
+    context = ({'form': form, 'dataset': dataset, 'dataset_range': dataset_range})
     return render_to_response('index.html', context, context_instance=RequestContext(request))
 
 

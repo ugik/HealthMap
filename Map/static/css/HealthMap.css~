@@ -1,7 +1,7 @@
 body {
     background-attachment: fixed;
     background-color: #FFFFFF;
-    background-image: url(/static/images/MapBackground.jpg);
+    background-image: url(/static/images/back.jpg);
     background-position: center bottom;
     color: #A90123;
     margin: 5;
@@ -11,7 +11,7 @@ body {
 
 #pageContainer {
     background: url(/static/images/Logo.jpg) no-repeat scroll right top #FFFFCC;
-    background-size: 100px 40px;
+    background-size: 120px 50px;
     margin: 5 auto;
     padding: 15;
     position: relative;
@@ -25,7 +25,7 @@ body {
 
 #datasetInfo {
     position:fixed;
-    top:32px;
+    top:33px;
     right:30px;
     font-size: 13px;
     width: 190px;

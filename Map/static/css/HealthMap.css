@@ -11,7 +11,7 @@ body {
 
 #pageContainer {
     background: url(/static/images/Logo.jpg) no-repeat scroll right top #FFFFCC;
-    background-size: 100px 40px;
+    background-size: 120px 50px;
     margin: 5 auto;
     padding: 15;
     position: relative;

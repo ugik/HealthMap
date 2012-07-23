@@ -10,7 +10,18 @@
 	<label for="tags">Tags: </label>{{ form.autocomplete }}<input type="submit" value="Map" alt="Map"/>
 </form>
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=7390162215";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
 <div id='datasetInfo'>
+
 <img src="/static/images/wait.gif" id="wait" height="35" width="35" /> <br>
 {%  if dataset.name != "Empty" %}
     Map: <b>{{ dataset.name }} </b> <br>

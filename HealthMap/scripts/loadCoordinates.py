@@ -69,11 +69,13 @@ def run():
     region_latitude = "64.396938"
     region_longitude = "-150"
     region_zoom = "4"
+    set_Coordinates(region_name, region_latitude, region_longitude, region_zoom)
 
     region_name = "Hawaii"
     region_latitude = "20.653346"
     region_longitude = "-157.412109"
     region_zoom = "7"
+    set_Coordinates(region_name, region_latitude, region_longitude, region_zoom)
 
 
 

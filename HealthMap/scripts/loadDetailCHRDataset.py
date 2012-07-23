@@ -20,9 +20,6 @@ def run():
 
 #    region = ["Tennessee", "North Carolina", "Kentucky", "West Virginia", "Virginia"]   
 #    region_name = "Appalachian Highlands"
-#    region_latitude = "36.597889"
-#    region_longitude = "-83.166504"
-#    region_zoom = "6"
 
 #    region = ["Wisconsin", "Illinois", "Indiana", "Ohio", "Michigan"]   
 #    region_name = "Midwest"
@@ -39,8 +36,8 @@ def run():
 #    region = ["Hawaii"]   
 #    region_name = "Hawaii"
 
-    region = []   
-    region_name = "Appalachian Highlands"
+    region = ["Alaska"]   
+    region_name = "Alaska"
 
     col = [None] * 60
     cat = [None] * 60
@@ -240,8 +237,7 @@ def run():
                         if not Dataset.objects.filter(name=dataset_name):
                             print("Creating Dataset: %s" % dataset_name)
                             
-                            dat = Dataset(category=cate[0], name=dataset_name, 
-                                                  maplatitude=region_latitude, maplongitude=region_longitude, mapzoom=region_zoom)
+                            dat = Dataset(category=cate[0], name=dataset_name)
                             dat.save()            
                         dat = Dataset.objects.filter(name=dataset_name)
                         val = sheet.cell(row_index,col_index).value

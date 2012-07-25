@@ -16,12 +16,14 @@
 {%  if dataset.name != "Empty" %}
     Map: <b>{{ dataset.name }} </b> <br>
     {{ dataset.description }} <br>
+    {% if dataset.citations|length > 0 %}
+    <small>(source:{{ dataset.citations }}) </small><br>
+    {% endif %}
     {% if dataset.imageURL|length > 0 %}
         <img src="{{ dataset.imageURL }}" alt="Dataset image" height="100" width="100" /> 
     {% endif %}
     <br>
     <table>
-
     {% for range in dataset_range %}
     <tr><td><font size=2>
      <span style="background-color:{{ range.color }}">&nbsp;&nbsp;&nbsp;&nbsp; </span> &nbsp;
@@ -30,6 +32,7 @@
     </font></td></tr>
     {% endfor %}
     </table>
+
 {% endif %}
 
 <br>
@@ -90,7 +93,7 @@
       var map = new GMap2(document.getElementById("map"));
       map.addControl(new GLargeMapControl());
       map.addControl(new GMapTypeControl());
-      {% if dataset.mapzoom != None %}
+      {% if dataset.mapzoom != None and dataset.mapzoom|length > 0 %}
           map.setCenter(new GLatLng({{ dataset.maplatitude }}, {{ dataset.maplongitude }}), {{ dataset.mapzoom }});
       {% else %}
           map.setCenter(new GLatLng(33.1,-95),4);

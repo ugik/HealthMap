@@ -21,7 +21,6 @@
     {% endif %}
     <br>
     <table>
-
     {% for range in dataset_range %}
     <tr><td><font size=2>
      <span style="background-color:{{ range.color }}">&nbsp;&nbsp;&nbsp;&nbsp; </span> &nbsp;
@@ -30,10 +29,14 @@
     </font></td></tr>
     {% endfor %}
     </table>
+
+    {% if dataset.citations|length > 0 %}
+    <br><small>(source:{{ dataset.citations }}) </small>
+    {% endif %}
 {% endif %}
 
 <br>
-<a href="/history" target="_blank"><img src="/static/images/history_icon.png" id="history" alt="search history" height="35" width="35" /></a>
+<a href="/history"><img src="/static/images/history_icon.png" id="history" alt="search history" height="35" width="35" /></a>
 <a href="http://www.facebook.com/USHealthMap" target="_blank"><img src="/static/images/fb_icon.png" height="35" width="35" /></a>
 <a href= "mailto:info@healthmap.us" ><img src="/static/images/email_icon.png" id="email" alt="Email us" height="35" width="35" /></a>
  <br>
@@ -90,7 +93,7 @@
       var map = new GMap2(document.getElementById("map"));
       map.addControl(new GLargeMapControl());
       map.addControl(new GMapTypeControl());
-      {% if dataset.mapzoom != None %}
+      {% if dataset.mapzoom != None and dataset.mapzoom|length > 0 %}
           map.setCenter(new GLatLng({{ dataset.maplatitude }}, {{ dataset.maplongitude }}), {{ dataset.mapzoom }});
       {% else %}
           map.setCenter(new GLatLng(33.1,-95),4);

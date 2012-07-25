@@ -34,9 +34,9 @@ class Dataset(models.Model):
     description = models.TextField(blank=True)
     imageURL = models.URLField(blank=True)
     citations = models.TextField(blank=True)
-    maplatitude = models.CharField(max_length=15)
-    maplongitude = models.CharField(max_length=15)
-    mapzoom = models.CharField(max_length=2)
+    maplatitude = models.CharField(max_length=15, blank=True)
+    maplongitude = models.CharField(max_length=15, blank=True)
+    mapzoom = models.CharField(max_length=2, blank=True)
     created = models.DateField(editable=False)
     updated = models.DateTimeField(editable=False)
 

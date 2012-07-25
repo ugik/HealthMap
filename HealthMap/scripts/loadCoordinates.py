@@ -1,7 +1,7 @@
 from HealthMap.models import Dataset
 
 def set_Coordinates(region_name, latitude, longitude, zoom):
-    dat = Dataset.objects.filter(name__icontains=region_name)
+    dat = Dataset.objects.filter(name__icontains=": "+region_name)
     for d in dat:
         d.maplatitude = latitude
         d.maplongitude = longitude

@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'HealthMap',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'django_extensions',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

@@ -7,7 +7,6 @@ from HealthMap.forms import LookupForm
 import json, simplejson
 import urllib
 import sys
-import datetime
 
 def HomePage(request):
     empty_dataset = Dataset.objects.get(name='Empty') 

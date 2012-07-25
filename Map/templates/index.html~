@@ -16,6 +16,9 @@
 {%  if dataset.name != "Empty" %}
     Map: <b>{{ dataset.name }} </b> <br>
     {{ dataset.description }} <br>
+    {% if dataset.citations|length > 0 %}
+    <small>(source:{{ dataset.citations }}) </small><br>
+    {% endif %}
     {% if dataset.imageURL|length > 0 %}
         <img src="{{ dataset.imageURL }}" alt="Dataset image" height="100" width="100" /> 
     {% endif %}
@@ -30,9 +33,6 @@
     {% endfor %}
     </table>
 
-    {% if dataset.citations|length > 0 %}
-    <br><small>(source:{{ dataset.citations }}) </small>
-    {% endif %}
 {% endif %}
 
 <br>

@@ -1,11 +1,13 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from django.db import models
 from django.http import HttpResponse
 from HealthMap.models import Dataset, Datarow, Region, Polyline, Range, History
 from HealthMap.forms import LookupForm
 import json, simplejson
 import urllib
 import sys
+import datetime
 
 def HomePage(request):
     empty_dataset = Dataset.objects.get(name='Empty') 
@@ -85,7 +87,27 @@ def dataset_gis(request):
         return HttpResponse(return_data, mimetype='application/javascript')
     except Exception, e:
         print e
+
+# show map history    
+def showHistory(request):
     
+    class history_mimic(object):
+        def __init__(self, id=None, name=None, searched=None):
+            self.id = id
+            self.name = name
+            self.searched = searched
+ 
+    recent_maps = []
+    history = History.objects.order_by('-searched')[:20]
+    for h in history:
+        dataset = Dataset.objects.filter(name__icontains=h.name)
+        if dataset:
+            print h.name
+            recent_maps.append(history_mimic(id=dataset[0].id, name=h.name, searched=h.searched.strftime("%m-%d-%Y")))
+        
+    context = ({'history': recent_maps})
+    return render_to_response('history.html', context, context_instance=RequestContext(request))
+
 
 # used by JQuery autocomplete widget
 def dataset_lookup(request):

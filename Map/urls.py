@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     (r'^lookup/$', 'HealthMap.views.LookupRequest'),
     url(r'^dataset_lookup/$','HealthMap.views.dataset_lookup', name='dataset_lookup'),
     url(r'^dataset_gis/$','HealthMap.views.dataset_gis', name='dataset_gis'),
+    url(r'^history/$', 'HealthMap.views.showHistory', name='showHistory'),
 
     url(r'^admin/', include(admin.site.urls)),
 )

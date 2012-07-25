@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block extrahead %}
+{% include "autocomplete.html" %}
+{% endblock %}
+	
+{% block content %}
+
+<h1>
+Recent searches: <br>
+</h1>
+
+<div id='history'>
+{% for map in history %}
+   {{ map.searched }} : <a href="/?id={{ map.id }}"/>{{ map.name }}</a><br>
+{% endfor %}
+</div>
+
+<div id='datasetInfo'>
+
+<br><br>
+<img src="/static/images/history_icon.png" id="history" alt="search history" height="35" width="35" /> 
+<a href="http://www.facebook.com/USHealthMap" target="_blank"><img src="/static/images/fb_icon.png" height="35" width="35" /></a>
+<a href= "mailto:info@healthmap.us" ><img src="/static/images/email_icon.png" id="email" alt="Email us" height="35" width="35" /></a>
+ <br>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=7390162215";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+</div>
+
+
+</div>
+
+{% endblock %}
+

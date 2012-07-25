@@ -20,7 +20,7 @@
     <small>(source:{{ dataset.citations }}) </small><br>
     {% endif %}
     {% if dataset.imageURL|length > 0 %}
-        <img src="{{ dataset.imageURL }}" alt="Dataset image" height="100" width="100" /> 
+        <img src="{{ dataset.imageURL }}" alt="Dataset image" height="100" /> 
     {% endif %}
     <br>
     <table>
@@ -128,7 +128,7 @@
                 {   pts[line] = new GLatLng(parseFloat(data[row].points[line].lat), parseFloat(data[row].points[line].lng));   } 
               var poly = new GPolygon(pts, line_color, 1,1, data[row].color, opaque, {clickable:false});
               polys.push(poly);
-              labels.push(data[row].state + '  ' + data[row].county);
+              labels.push(data[row].state + '  ' + data[row].county + '(' + data[row].value + ')');
               map.addOverlay(poly);
           };
       document.getElementById('wait').style.visibility = 'hidden'; 

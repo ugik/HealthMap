@@ -58,6 +58,7 @@ def dataset_gis(request):
             data = {}
             data['state'] = row.region.state
             data['county'] = row.region.county
+            data['value'] = str(row.value)
             if row.color()=="#FFFFF0":
                 for ran in dataset_range:
 #                    print("[%s] low:%s high:%s" % (row.value, ran.low, ran.high))
@@ -71,7 +72,7 @@ def dataset_gis(request):
                 data['color'] = row.color()
             
             points = []
-            for line in row.region.polyline_set.all():
+            for line in row.region.polyline_set.order_by('pk'):
                 pts = {}
                 pts['lat'] = str(line.lat)
                 pts['lng'] = str(line.lng)

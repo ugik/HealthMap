@@ -128,7 +128,7 @@
                 {   pts[line] = new GLatLng(parseFloat(data[row].points[line].lat), parseFloat(data[row].points[line].lng));   } 
               var poly = new GPolygon(pts, line_color, 1,1, data[row].color, opaque, {clickable:false});
               polys.push(poly);
-              labels.push(data[row].state + '  ' + data[row].county + '(' + data[row].value + ')');
+              labels.push(data[row].state + '  ' + data[row].county + ' (' + data[row].value + ')');
               map.addOverlay(poly);
           };
       document.getElementById('wait').style.visibility = 'hidden'; 

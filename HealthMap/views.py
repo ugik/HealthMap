@@ -54,6 +54,9 @@ def dataset_gis(request):
 
         results = []
         print("rows:%s" % len(dataset.datarow_set.all()))
+
+        import pdb; pdb.set_trace()
+        
         for row in dataset.datarow_set.all():
             data = {}
             data['state'] = row.region.state

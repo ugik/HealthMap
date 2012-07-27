@@ -54,11 +54,12 @@ def dataset_gis(request):
 
         results = []
         print("rows:%s" % len(dataset.datarow_set.all()))
+        import pdb; pdb.set_trace()
         for row in dataset.datarow_set.all():
             data = {}
             data['state'] = row.region.state
             data['county'] = row.region.county
-            data['value'] = row.value
+            data['value'] = str(row.value)
             if row.color()=="#FFFFF0":
                 for ran in dataset_range:
 #                    print("[%s] low:%s high:%s" % (row.value, ran.low, ran.high))

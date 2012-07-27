@@ -308,7 +308,10 @@ def run():
                         print("Missing Category: %s" % cat[col_index])
                     if not Dataset.objects.filter(name=col[col_index]):
                         print("Creating Dataset: %s" % col[col_index])
-                        dat = Dataset(category=cate[0], name=col[col_index])
+                        dat = Dataset(category=cate[0], 
+                                              name=col[col_index], 
+                                              description=desc[col_index], 
+                                              citations=source[col_index])
                         dat.save()            
                     dat = Dataset.objects.filter(name=col[col_index])
                     val = sheet.cell(row_index,col_index).value

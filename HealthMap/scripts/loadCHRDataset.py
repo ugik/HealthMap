@@ -5,6 +5,9 @@ def run():
 
     col = [None] * 60
     cat = [None] * 60
+    desc = [None] * 60
+    source = [None] * 60
+
     col[0] = "FIPS"
     col[1] = "State"
     col[2] = "County"

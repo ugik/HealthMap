@@ -10,7 +10,7 @@ def run():
     cat.save()
 
     # clean up if necessary
-    dat = Dataset.objects.filter(name__startswith='Empty')
+    dat = Dataset.objects.get(name='Empty')
     if not dat:
         # create the empty Dataset
         dat = Dataset(category=cat, name="Empty", description="Empty Dataset", legend="Empty")

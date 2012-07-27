@@ -10,11 +10,12 @@ def run():
     cat.save()
 
     # clean up if necessary
-    dat = Dataset.objects.get(name='Empty')
+    dat = Dataset.objects.filter(name='Empty')
     if not dat:
         # create the empty Dataset
         dat = Dataset(category=cat, name="Empty", description="Empty Dataset", legend="Empty")
         dat.save()
+    dat = Dataset.objects.filter(name='Empty')
 
     row = Datarow.objects.filter(dataset=dat)
     if row:
@@ -29,8 +30,8 @@ def run():
         # create the State record in Datarow table with one zero value
         print ("%s (%s)" % (state.getAttribute('name'), state.getAttribute('abbrev')))
         reg = Region.objects.filter(state=state.getAttribute('abbrev'))
-#        if len(reg)==1:
-#            row = Datarow(dataset=dat[0], region=reg[0], value=random.randrange(0,60))
-#            row.save()
+        if len(reg)==1:
+            row = Datarow(dataset=dat[0], region=reg[0], value=random.randrange(0,60))
+            row.save()
             
     print ("... %s values" % len(sList))

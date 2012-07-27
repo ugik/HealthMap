@@ -304,7 +304,7 @@ def detailRegion(region, region_name):
                             dat.save()
                         dat = Dataset.objects.filter(name=dataset_name)
                         val = sheet.cell(row_index,col_index).value
-                        print("data for Region:%s/%s, (%s) Dataset:%s" % (reg[0].state, reg[0].county, str(val).strip(), dataset_name))
+#                        print("data for Region:%s/%s, (%s) Dataset:%s" % (reg[0].state, reg[0].county, str(val).strip(), dataset_name))
                         row = Datarow.objects.filter(dataset=dat[0], region=reg[0])
                         if row:     # cleanup if necessary
                             row.delete()
@@ -316,41 +316,51 @@ def detailRegion(region, region_name):
 
 def run():
 
-#    region = ["Washingtom", "Oregon", "California"]   
-#    region_name = "Pacific Coast"
+    region = ["Washingtom", "Oregon", "California"]   
+    region_name = "Pacific Coast"
+    detailRegion(region=region, region_name=region_name)
 
-#    region = ["Nevada", "Idaho", "Utah", "Colorado", "Wyoming", "Montana"]   
-#    region_name = "Mountain"
+    region = ["Nevada", "Idaho", "Utah", "Colorado", "Wyoming", "Montana"]   
+    region_name = "Mountain"
+    detailRegion(region=region, region_name=region_name)
 
-#    region = ["Arizona", "New Mexico", "Texas", "Oklahoma"]   
-#    region_name = "Southwest"
+    region = ["Arizona", "New Mexico", "Texas", "Oklahoma"]   
+    region_name = "Southwest"
+    detailRegion(region=region, region_name=region_name)
 
-#    region = ["North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri"]   
-#    region_name = "Heartland"
+    region = ["North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri"]   
+    region_name = "Heartland"
+    detailRegion(region=region, region_name=region_name)
 
-#    region = ["Arkansas", "Louisiana", "Mississippi", "Alabama", "Georgia", "Florida", "South Carolina"]   
-#    region_name = "Southeast"
+    region = ["Arkansas", "Louisiana", "Mississippi", "Alabama", "Georgia", "Florida", "South Carolina"]   
+    region_name = "Southeast"
+    detailRegion(region=region, region_name=region_name)
 
-#    region = ["Tennessee", "North Carolina", "Kentucky", "West Virginia", "Virginia"]   
-#    region_name = "Appalachian Highlands"
+    region = ["Tennessee", "North Carolina", "Kentucky", "West Virginia", "Virginia"]   
+    region_name = "Appalachian Highlands"
+    detailRegion(region=region, region_name=region_name)
 
-#    region = ["Wisconsin", "Illinois", "Indiana", "Ohio", "Michigan"]   
-#    region_name = "Midwest"
+    region = ["Wisconsin", "Illinois", "Indiana", "Ohio", "Michigan"]   
+    region_name = "Midwest"
+    detailRegion(region=region, region_name=region_name)
 
-#    region = ["New York", "New Jersey", "Delaware", "Maryland", "District of Columbia"]   
-#    region_name = "Mid-Atlantic"
-
-#    region = ["Connecticut", "Rhode Island", "Massachusetts", "Vermont", "New Hampshire", "Maine"]   
-#    region_name = "New England"
-
-#    region = ["Alaska"]   
-#    region_name = "Alaska"
-
-#    region = ["Hawaii"]   
-#    region_name = "Hawaii"
+    region = ["New York", "New Jersey", "Delaware", "Maryland", "District of Columbia"]   
+    region_name = "Mid-Atlantic"
+    detailRegion(region=region, region_name=region_name)
 
     region = ["Connecticut", "Rhode Island", "Massachusetts", "Vermont", "New Hampshire", "Maine"]   
     region_name = "New England"
     detailRegion(region=region, region_name=region_name)
+
+    region = ["Alaska"]   
+    region_name = "Alaska"
+#    detailRegion(region=region, region_name=region_name)
+
+    region = ["Hawaii"]   
+    region_name = "Hawaii"
+
+    region = ["Connecticut", "Rhode Island", "Massachusetts", "Vermont", "New Hampshire", "Maine"]   
+    region_name = "New England"
+#    detailRegion(region=region, region_name=region_name)
 
 

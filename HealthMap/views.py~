@@ -53,9 +53,9 @@ def dataset_gis(request):
         dataset_range = datasetRange(dataset)
 
         results = []
-        print("rows:%s" % len(dataset.datarow_set.all()))
+        print("gis elements:%s" % len(dataset.datarow_set.all()))
 
-        import pdb; pdb.set_trace()
+#        import pdb; pdb.set_trace()
         
         for row in dataset.datarow_set.all():
             data = {}

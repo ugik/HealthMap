@@ -53,7 +53,6 @@ def dataset_gis(request):
         dataset_range = datasetRange(dataset)
 
         results = []
-        print("rows:%s" % len(dataset.datarow_set.all()))
 
 #        import pdb; pdb.set_trace()
         
@@ -84,7 +83,7 @@ def dataset_gis(request):
             data['points'] = points    # points array within the data array
             results.append(data)
 
-        print ("dataset:%s  rows:%s" % (dataset.name, len(results)))
+        print ("dataset:%s  gis elements:%s" % (dataset.name, len(results)))
 
         return_data = json.dumps(results)
         return HttpResponse(return_data, mimetype='application/javascript')

@@ -1,3 +1,4 @@
+# Django settings for Map project.
 import os
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
@@ -16,7 +17,7 @@ DATABASES = {
         'NAME': 'gk',                      # Or path to database file if using sqlite3.
         'USER': 'gk',                      # Not used with sqlite3.
         'PASSWORD': 'cassimere''',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'HOST': 'localhost',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }

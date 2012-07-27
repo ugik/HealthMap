@@ -1,44 +1,7 @@
 from HealthMap.models import Region, Dataset, Datarow, Category, Range
 from xlrd import open_workbook,cellname
 
-def run():
-
-#    region = ["Washingtom", "Oregon", "California"]   
-#    region_name = "Pacific Coast"
-
-#    region = ["Nevada", "Idaho", "Utah", "Colorado", "Wyoming", "Montana"]   
-#    region_name = "Mountain"
-
-#    region = ["Arizona", "New Mexico", "Texas", "Oklahoma"]   
-#    region_name = "Southwest"
-
-#    region = ["North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri"]   
-#    region_name = "Heartland"
-
-#    region = ["Arkansas", "Louisiana", "Mississippi", "Alabama", "Georgia", "Florida", "South Carolina"]   
-#    region_name = "Southeast"
-
-#    region = ["Tennessee", "North Carolina", "Kentucky", "West Virginia", "Virginia"]   
-#    region_name = "Appalachian Highlands"
-
-#    region = ["Wisconsin", "Illinois", "Indiana", "Ohio", "Michigan"]   
-#    region_name = "Midwest"
-
-#    region = ["New York", "New Jersey", "Delaware", "Maryland", "District of Columbia"]   
-#    region_name = "Mid-Atlantic"
-
-#    region = ["Connecticut", "Rhode Island", "Massachusetts", "Vermont", "New Hampshire", "Maine"]   
-#    region_name = "New England"
-
-#    region = ["Alaska"]   
-#    region_name = "Alaska"
-
-#    region = ["Hawaii"]   
-#    region_name = "Hawaii"
-
-    region = ["Alaska"]   
-    region_name = "Alaska"
-
+def detailRegion(region, region_name):
     col = [None] * 60
     cat = [None] * 60
     desc = [None] * 60
@@ -305,11 +268,6 @@ def run():
     book = open_workbook('HealthMap/scripts/data.xls')
     sheet = book.sheet_by_index(1)
     
-    # delete existing Datasets
-    dat = Dataset.objects.filter(name__in=col)
-    if dat:
-        dat.delete()
-    
     for row_index in range(sheet.nrows):
         state = sheet.cell(row_index,1).value
         fips = sheet.cell(row_index,0).value
@@ -356,16 +314,43 @@ def run():
                             row.save()
 
 
+def run():
 
+#    region = ["Washingtom", "Oregon", "California"]   
+#    region_name = "Pacific Coast"
 
+#    region = ["Nevada", "Idaho", "Utah", "Colorado", "Wyoming", "Montana"]   
+#    region_name = "Mountain"
 
+#    region = ["Arizona", "New Mexico", "Texas", "Oklahoma"]   
+#    region_name = "Southwest"
 
+#    region = ["North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri"]   
+#    region_name = "Heartland"
 
+#    region = ["Arkansas", "Louisiana", "Mississippi", "Alabama", "Georgia", "Florida", "South Carolina"]   
+#    region_name = "Southeast"
 
+#    region = ["Tennessee", "North Carolina", "Kentucky", "West Virginia", "Virginia"]   
+#    region_name = "Appalachian Highlands"
 
+#    region = ["Wisconsin", "Illinois", "Indiana", "Ohio", "Michigan"]   
+#    region_name = "Midwest"
 
+#    region = ["New York", "New Jersey", "Delaware", "Maryland", "District of Columbia"]   
+#    region_name = "Mid-Atlantic"
 
+#    region = ["Connecticut", "Rhode Island", "Massachusetts", "Vermont", "New Hampshire", "Maine"]   
+#    region_name = "New England"
 
+#    region = ["Alaska"]   
+#    region_name = "Alaska"
 
+#    region = ["Hawaii"]   
+#    region_name = "Hawaii"
+
+    region = ["Connecticut", "Rhode Island", "Massachusetts", "Vermont", "New Hampshire", "Maine"]   
+    region_name = "New England"
+    detailRegion(region=region, region_name=region_name)
 
 

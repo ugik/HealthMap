@@ -7,7 +7,7 @@ def run():
     print "Loading County Polyline data"
 
 #    sf = shapefile.Reader("HealthMap/scripts/US_Counties/US_county_region")
-    sf = shapefile.Reader("HealthMap/scripts/US_Counties/HI_county_region")
+    sf = shapefile.Reader("HealthMap/scripts/US_Counties/US_county_region")
 
     shapes = sf.shapes()
     records = sf.records()

@@ -17,7 +17,21 @@ def run():
         dat.save()
     dat = Dataset.objects.filter(name='Empty')
 
-    row = Datarow.objects.filter(dataset=dat)
+    # create empty ranges
+    range = Range(dataset=dat[0], name="Low", low=0, high=10, color="#FFFAFA")
+    range.save()
+    range = Range(dataset=dat[0], name="Low-Mid", low=10, high=20, color="#F2F2F2")
+    range.save()
+    range = Range(dataset=dat[0], name="Mid", low=20, high=30, color="#D0CFCF")
+    range.save()
+    range = Range(dataset=dat[0], name="Mid-High", low=30, high=40, color="#ADACAC")
+    range.save()
+    range = Range(dataset=dat[0], name="High", low=40, high=50, color="#8B8989")
+    range.save()
+    range = Range(dataset=dat[0], name="Very High", low=50, high=60, color="#596C56")
+    range.save()
+    
+    row = Datarow.objects.filter(dataset=dat[0])
     if row:
         row.delete()
 

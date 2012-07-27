@@ -2,7 +2,7 @@ from django.contrib import admin
 from HealthMap.models import *
         
 class RangeAdmin(admin.ModelAdmin):
-    list_display = ('low', 'high', 'name', 'dataset')
+    list_display = ('low', 'high', 'color', 'name', 'dataset')
     search_fields = ['name']
     ordering = ('low',)
 

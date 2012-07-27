@@ -5,6 +5,9 @@ import random
 def run():
     print "Loading empty Dataset"
 
+    # create the empty Category
+    cat = Category(name="Empty")
+    cat.save()
 
     # clean up if necessary
     dat = Dataset.objects.filter(name__startswith='Empty')
@@ -26,7 +29,7 @@ def run():
         # create the State record in Datarow table with one zero value
         print ("%s (%s)" % (state.getAttribute('name'), state.getAttribute('abbrev')))
         reg = Region.objects.filter(state=state.getAttribute('abbrev'))
-        if len(reg)==1:
+#        if len(reg)==1:
 #            row = Datarow(dataset=dat[0], region=reg[0], value=random.randrange(0,60))
 #            row.save()
             

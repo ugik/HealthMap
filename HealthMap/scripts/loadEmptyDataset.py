@@ -45,7 +45,7 @@ def run():
         print ("%s (%s)" % (state.getAttribute('name'), state.getAttribute('abbrev')))
         reg = Region.objects.filter(state=state.getAttribute('abbrev'))
         if len(reg)==1:
-            row = Datarow(dataset=dat[0], region=reg[0], value=random.randrange(0,60))
+            row = Datarow(dataset=dat[0], region=reg[0], value=0)
             row.save()
             
     print ("... %s values" % len(sList))

@@ -31,7 +31,7 @@ def run():
     range = Range(dataset=dat[0], name="Very High", low=50, high=60, color="#596C56")
     range.save()
     
-    row = Datarow.objects.filter(dataset=dat)
+    row = Datarow.objects.filter(dataset=dat[0])
     if row:
         row.delete()
 

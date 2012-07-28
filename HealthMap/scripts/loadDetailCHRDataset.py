@@ -157,7 +157,7 @@ def detailRegion(region, region_name):
 
 
 # category: Demographics
-    col[33] = "<18 Population <18 : "
+    col[33] = "<18 Population : "
     cat[33] = "Demographic"
     desc[33] = ""
     source[33] = "US Census Bureau 2009"

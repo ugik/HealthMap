@@ -117,7 +117,7 @@
 
 <div id='datasetInfo'>
 {%  if dataset.name != "Empty" %}
-    Map: <b>{{ dataset.name }} </b> <br>
+    <font color="blue"><b>{{ dataset.name }} </b></font> <br>
     {{ dataset.description }} <br>
     {% if dataset.citations|length > 0 %}
     <small>(source:{{ dataset.citations }}) </small><br>

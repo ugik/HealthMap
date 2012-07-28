@@ -94,7 +94,15 @@ function geo_success(position) {
 				map: map,
 				title: "You"
 			});
-//    printLatLong(position.coords.latitude, position.coords.longitude);
+    var contentString = "<b>You</b> " ;
+    var infowindow = new google.maps.InfoWindow({
+				content: contentString
+			});
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.open(map,marker);
+			});
+
+    printLatLong(position.coords.latitude, position.coords.longitude);
 }
 
 function geo_error(err) {
@@ -111,8 +119,8 @@ function geo_error(err) {
 
 // output lat and long
 function printLatLong(lat, long) {
-    $('body').append('<p>Lat: ' + lat + '</p>');
-    $('body').append('<p>Long: ' + long + '</p>');
+    $('body').append('<p>Lat: ' + lat + ' ');
+    $('body').append('<p>Long: ' + long + ' ');
 }
 
 function error(msg) {

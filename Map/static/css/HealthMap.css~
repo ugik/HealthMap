@@ -1,4 +1,54 @@
-body {
+html {
+		margin:0;
+		padding:0;
+		color:#000;
+		background:#FFFFFF;
+        font-family: "Comic Sans MS";
+	}
+#pageContainer {
+		width:920px;
+		margin:0 auto;
+        background: url(/static/images/Logo.jpg) no-repeat scroll right top #FFFFFF;
+        background-size: 120px 50px;
+	}
+#id_autocomplete {
+        width: 500px;
+    	padding:5px 10px;
+		background:#99FFFF;
+	}
+h1 {
+	    margin:5;
+    }
+#map {
+		float:left;
+		width:750px;
+		padding:5px;
+		background:#FFFFFF;
+	}
+h2 {
+		margin:0 0 1em;
+	}
+#datasetInfo {
+		float:right;
+		width:150px;
+		padding:5px;
+		background:#FFFFFF;
+	}
+#footer {
+		clear:both;
+		padding:5px 10px;
+		background:#99FFFF;
+	}
+#footer p {
+		margin:0;
+    }
+* html #footer {
+		height:1px;
+	}
+	
+
+
+body__ {
     background-attachment: fixed;
     background-color: #FFFFFF;
     background-image: url(/static/images/MapBackground.jpg);
@@ -6,28 +56,30 @@ body {
     color: #A90123;
     margin: 5;
     padding: 5;
-    font-family: Arial;
+    font-family: "Century Gothic";
 }
 
-#pageContainer {
+#pageContainer__ {
     background: url(/static/images/Logo.jpg) no-repeat scroll right top #FFFFCC;
     background-size: 120px 50px;
     margin: 5 auto;
     padding: 10;
     position: fixed;
-    width: 950px;
+    width: 750px;
     min-height: 500px;
 }
 
-#id_autocomplete {
+#id_autocomplete__ {
     width: 500px;
 }
 
-#datasetInfo {
+#datasetInfo__ {
     position:fixed;
     top:33px;
     right:30px;
     font-size: 13px;
     width: 15%;
 }
+
+
 

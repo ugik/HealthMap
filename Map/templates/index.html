@@ -5,58 +5,17 @@
 	
 {% block content %}
 
+
 <form action="/lookup/" method="post">
 {% csrf_token %}
-	<label for="tags">Tags: </label>{{ form.autocomplete }}<input type="submit" value="Map" alt="Map"/>
+	<label for="tags">Map: </label>{{ form.autocomplete }}<input type="submit" value="Map" alt="Map"/>
 </form>
 
-<div id='datasetInfo'>
 
-<img src="/static/images/wait.gif" id="wait" height="35" /> <br>
-{%  if dataset.name != "Empty" %}
-    Map: <b>{{ dataset.name }} </b> <br>
-    {{ dataset.description }} <br>
-    {% if dataset.citations|length > 0 %}
-    <small>(source:{{ dataset.citations }}) </small><br>
-    {% endif %}
-    {% if dataset.imageURL|length > 0 %}
-        <img src="{{ dataset.imageURL }}" alt="Dataset image" height="100" /> 
-    {% endif %}
-    <br>
-    <table>
-    {% for range in dataset_range %}
-    <tr><td><font size=2>
-     <span style="background-color:{{ range.color }}">&nbsp;&nbsp;&nbsp;&nbsp; </span> &nbsp;
-        {{ range.name }}</td><tr><td><font size=2>
-        {{ range.low|floatformat:1 }} - {{ range.high|floatformat:1 }}
-    </font></td></tr>
-    {% endfor %}
-    </table>
-
-{% endif %}
-
-<br>
-<a href="/history"><img src="/static/images/history_icon.png" id="history" alt="search history" height="35" width="35" /></a>
-<a href="http://www.facebook.com/USHealthMap" target="_blank"><img src="/static/images/fb_icon.png" height="35" width="35" /></a>
-<a href= "mailto:info@healthmap.us" ><img src="/static/images/email_icon.png" id="email" alt="Email us" height="35" width="35" /></a>
- <br>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
- <div class="fb-like" data-href="http://www.facebook.com/USHealthMap" data-send="true" data-layout="box_count" data-width="450" data-show-faces="true"></div>
-
-</div>
+ <div id="map" style="height: 600px">
 
     <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCBo3eZFzgJ_u2Wz7ZOVeHz24wjgpmsMGE" type="text/javascript"></script>
   <body onunload="GUnload()">
-
-    <div id="map" style="width: 750px; height: 600px">
 
     <noscript><b>JavaScript must be enabled in order for you to use Google Maps.</b> 
       However, it seems JavaScript is either disabled or not supported by your browser. 
@@ -147,5 +106,51 @@
 
   </div>
 
+<div id='datasetInfo'>
+
+<img src="/static/images/wait.gif" id="wait" height="35" /> <br>
+{%  if dataset.name != "Empty" %}
+    Map: <b>{{ dataset.name }} </b> <br>
+    {{ dataset.description }} <br>
+    {% if dataset.citations|length > 0 %}
+    <small>(source:{{ dataset.citations }}) </small><br>
+    {% endif %}
+    {% if dataset.imageURL|length > 0 %}
+        <img src="{{ dataset.imageURL }}" alt="Dataset image" height="100" /> 
+    {% endif %}
+    <br>
+    <table>
+    {% for range in dataset_range %}
+    <tr><td><font size=2>
+     <span style="background-color:{{ range.color }}">&nbsp;&nbsp;&nbsp;&nbsp; </span> &nbsp;
+        {{ range.name }}</td><tr><td><font size=2>
+        {{ range.low|floatformat:1 }} - {{ range.high|floatformat:1 }}
+    </font></td></tr>
+    {% endfor %}
+    </table>
+
+{% endif %}
+
+<br>
+<a href="/history"><img src="/static/images/history_icon.png" id="history" alt="search history" height="35" width="35" /></a>
+<a href="http://www.facebook.com/USHealthMap" target="_blank"><img src="/static/images/fb_icon.png" height="35" width="35" /></a>
+<a href= "mailto:info@healthmap.us" ><img src="/static/images/email_icon.png" id="email" alt="Email us" height="35" width="35" /></a>
+ <br>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+ <div class="fb-like" data-href="http://www.facebook.com/USHealthMap" data-send="true" data-layout="box_count" data-width="450" data-show-faces="true"></div>
+
+</div>
+
+<div id="footer">
+<small>HealthMap.us (2012)</small>
+</div>
 {% endblock %}
 

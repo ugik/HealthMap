@@ -3,7 +3,7 @@ html {
 		padding:0;
 		color:#000;
 		background:#FFFFFF;
-        font-family: "Century Gothic";
+        font-family: "Arial";
 	}
 #pageContainer {
 		width:1020px;
@@ -13,6 +13,7 @@ html {
 	}
 #id_autocomplete {
         width: 500px;
+        font-size: 15px;
     	padding:5px 10px;
 		background:#ddd;
 	}

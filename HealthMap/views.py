@@ -111,12 +111,12 @@ def showHistory(request):
             self.searched = searched
  
     recent_maps = []
-    history = History.objects.order_by('-searched')[:20]
+    history = History.objects.order_by('-searched')[:30]
     for h in history:
         dataset = Dataset.objects.filter(name__icontains=h.name)
         if dataset:
             print h.name
-            recent_maps.append(history_mimic(id=dataset[0].id, name=h.name, searched=h.searched.strftime("%m-%d-%Y")))
+            recent_maps.append(history_mimic(id=dataset[0].id, name=h.name, searched=h.searched.strftime("%m/%d %H:%M")))
         
     context = ({'history': recent_maps})
     return render_to_response('history.html', context, context_instance=RequestContext(request))

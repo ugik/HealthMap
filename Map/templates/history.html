@@ -4,20 +4,18 @@
 {% endblock %}
 	
 {% block content %}
-
 <h1>
-Recent searches: <br>
+<a href= "/" >Health Map </a>searches:<br>
 </h1>
 
 <div id='history'>
 {% for map in history %}
-   {{ map.searched }} : <a href="/?id={{ map.id }}"/>{{ map.name }}</a><br>
+   <small>{{ map.searched }}</small> &nbsp;&nbsp;<a href="/?id={{ map.id }}"/>{{ map.name }}</a><br>
 {% endfor %}
 </div>
 
 <div id='datasetInfo'>
-
-<br><br>
+<br>
 <img src="/static/images/history_icon.png" id="history" alt="search history" height="35" width="35" /> 
 <a href="http://www.facebook.com/USHealthMap" target="_blank"><img src="/static/images/fb_icon.png" height="35" width="35" /></a>
 <a href= "mailto:info@healthmap.us" ><img src="/static/images/email_icon.png" id="email" alt="Email us" height="35" width="35" /></a>
@@ -33,8 +31,8 @@ Recent searches: <br>
 </script>
 </div>
 
-
+<div id="footer">
+<small> <a href= "mailto:info@healthmap.us" >HealthMap.us (2012)</a></small>
 </div>
-
 {% endblock %}
 

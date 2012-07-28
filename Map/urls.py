@@ -8,6 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^$', 'HealthMap.views.HomePage'),
     (r'^lookup/$', 'HealthMap.views.LookupRequest'),
+    (r'^random/$', 'HealthMap.views.RandomRequest'),
     url(r'^dataset_lookup/$','HealthMap.views.dataset_lookup', name='dataset_lookup'),
     url(r'^dataset_gis/$','HealthMap.views.dataset_gis', name='dataset_gis'),
     url(r'^history/$', 'HealthMap.views.showHistory', name='showHistory'),

@@ -8,8 +8,13 @@
 
 <form action="/lookup/" method="post">
 {% csrf_token %}
-	<label for="tags">Map: </label>{{ form.autocomplete }}<input type="submit" style="height: 32px; width: 75px" value="Map" alt="Map"/>
+	<label for="tags">Search: </label>{{ form.autocomplete }}<input type="submit" style="height: 32px; width: 55px" value="Map" alt="Map"/>
 </form>
+<form action="/random/" method="post">
+{% csrf_token %}
+	<input type="submit" style="height: 32px; width: 75px" value="Random" alt="Map"/>
+</form>
+
 
 
  <div id="map" style="height: 600px">
@@ -150,7 +155,8 @@
 </div>
 
 <div id="footer">
-<small>HealthMap.us (2012)</small>
+<small> <a href= "mailto:info@healthmap.us" >HealthMap.us (2012)</a></small>
+
 </div>
 {% endblock %}
 

@@ -49,38 +49,3 @@ h2 {
 	
 
 
-body__ {
-    background-attachment: fixed;
-    background-color: #FFFFFF;
-    background-image: url(/static/images/MapBackground.jpg);
-    background-position: center bottom;
-    color: #A90123;
-    margin: 5;
-    padding: 5;
-    font-family: "Century Gothic";
-}
-
-#pageContainer__ {
-    background: url(/static/images/Logo.jpg) no-repeat scroll right top #FFFFCC;
-    background-size: 120px 50px;
-    margin: 5 auto;
-    padding: 10;
-    position: fixed;
-    width: 750px;
-    min-height: 500px;
-}
-
-#id_autocomplete__ {
-    width: 500px;
-}
-
-#datasetInfo__ {
-    position:fixed;
-    top:33px;
-    right:30px;
-    font-size: 13px;
-    width: 15%;
-}
-
-
-

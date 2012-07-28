@@ -44,6 +44,17 @@ def LookupRequest(request):
     context = ({'form': form})
     return render_to_response('index.html', context, context_instance=RequestContext(request))
 
+def RandomRequest(request):
+    data = Dataset.objects.order_by('?')[0]
+    if data:
+        dataset_chosen = data[0].id
+        return redirect('/?id=%s' % dataset_chosen)
+    else:
+        return redirect('/')
+
+    context = ({})
+    return render_to_response('index.html', context, context_instance=RequestContext(request))
+
 
 # provides gis data for dataset to render map polygons
 def dataset_gis(request):
@@ -53,7 +64,6 @@ def dataset_gis(request):
         dataset_range = datasetRange(dataset)
 
         results = []
-        print("gis elements:%s" % len(dataset.datarow_set.all()))
 
 #        import pdb; pdb.set_trace()
         
@@ -84,7 +94,7 @@ def dataset_gis(request):
             data['points'] = points    # points array within the data array
             results.append(data)
 
-        print ("dataset:%s  rows:%s" % (dataset.name, len(results)))
+        print ("dataset:%s  gis elements:%s" % (dataset.name, len(results)))
 
         return_data = json.dumps(results)
         return HttpResponse(return_data, mimetype='application/javascript')

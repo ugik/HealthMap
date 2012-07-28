@@ -5,11 +5,16 @@
 	
 {% block content %}
 
-
+<table><tr><td>
 <form action="/lookup/" method="post">
 {% csrf_token %}
-	<label for="tags">Search: </label>{{ form.autocomplete }}<input type="submit" style="height: 32px; width: 75px" value="Map" alt="Map"/>
-</form>
+	<label for="tags">Search: </label>{{ form.autocomplete }}<input type="submit" style="height: 32px; width: 55px" value="Map" alt="Map"/>
+</form></td><td>
+<form action="/random/" method="post">
+{% csrf_token %}
+	<input type="submit" style="height: 32px; width: 75px" value="Random" alt="Map"/>
+</form></td></tr>
+</table>
 
 
  <div id="map" style="height: 600px">
@@ -150,7 +155,8 @@
 </div>
 
 <div id="footer">
-<small>HealthMap.us (2012)</small>
+<small> <a href= "mailto:info@healthmap.us" >HealthMap.us (2012)</a></small>
+
 </div>
 {% endblock %}
 

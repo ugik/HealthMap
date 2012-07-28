@@ -44,6 +44,17 @@ def LookupRequest(request):
     context = ({'form': form})
     return render_to_response('index.html', context, context_instance=RequestContext(request))
 
+def RandomRequest(request):
+    data = Dataset.objects.order_by('?')[0]
+    if data:
+        dataset_chosen = data.id
+        return redirect('/?id=%s' % dataset_chosen)
+    else:
+        return redirect('/')
+
+    context = ({})
+    return render_to_response('index.html', context, context_instance=RequestContext(request))
+
 
 # provides gis data for dataset to render map polygons
 def dataset_gis(request):

@@ -6,15 +6,15 @@ body {
     color: #A90123;
     margin: 5;
     padding: 5;
-    font-family: Ubuntu;
+    font-family: Arial;
 }
 
 #pageContainer {
     background: url(/static/images/Logo.jpg) no-repeat scroll right top #FFFFCC;
     background-size: 120px 50px;
     margin: 5 auto;
-    padding: 15;
-    position: relative;
+    padding: 10;
+    position: fixed;
     width: 950px;
     min-height: 500px;
 }
@@ -28,6 +28,6 @@ body {
     top:33px;
     right:30px;
     font-size: 13px;
-    width: 190px;
+    width: 15%;
 }
 

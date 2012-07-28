@@ -1,12 +1,12 @@
 body {
     background-attachment: fixed;
     background-color: #FFFFFF;
-    background-image: url(/static/images/back.jpg);
+    background-image: url(/static/images/MapBackground.jpg);
     background-position: center bottom;
     color: #A90123;
     margin: 5;
     padding: 5;
-    font-family: Ubuntu;
+    font-family: Arial;
 }
 
 #pageContainer {
@@ -28,6 +28,6 @@ body {
     top:33px;
     right:30px;
     font-size: 13px;
-    width: 190px;
+    width: 15%;
 }
 

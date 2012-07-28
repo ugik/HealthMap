@@ -42,6 +42,8 @@ h2 {
 	}
 #footer {
 		clear:both;
+        font-size: 12px;
+        font-color: blue;
 		padding:5px 10px;
 		background:#ddd;
 	}

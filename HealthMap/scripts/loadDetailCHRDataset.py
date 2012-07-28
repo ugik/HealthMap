@@ -318,7 +318,7 @@ def run():
 
     region = ["Washington", "Oregon", "California"]   
     region_name = "Pacific Coast"
-    detailRegion(region=region, region_name=region_name)
+#    detailRegion(region=region, region_name=region_name)
 
     region = ["Nevada", "Idaho", "Utah", "Colorado", "Wyoming", "Montana"]   
     region_name = "Mountain"
@@ -344,9 +344,9 @@ def run():
     region_name = "Midwest"
 #    detailRegion(region=region, region_name=region_name)
 
-    region = ["New York", "New Jersey", "Delaware", "Maryland", "District of Columbia"]   
+    region = ["Pennsylvania", "New York", "New Jersey", "Delaware", "Maryland", "District of Columbia"]   
     region_name = "Mid-Atlantic"
-#    detailRegion(region=region, region_name=region_name)
+    detailRegion(region=region, region_name=region_name)
 
     region = ["Connecticut", "Rhode Island", "Massachusetts", "Vermont", "New Hampshire", "Maine"]   
     region_name = "New England"

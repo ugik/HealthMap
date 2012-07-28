@@ -8,7 +8,7 @@
 
 <form action="/lookup/" method="post">
 {% csrf_token %}
-	<label for="tags">Map: </label>{{ form.autocomplete }}<input type="submit" value="Map" alt="Map"/>
+	<label for="tags">Map: </label>{{ form.autocomplete }}<input type="submit" style="height: 30px; width: 75px" value="Map" alt="Map"/>
 </form>
 
 
@@ -108,7 +108,7 @@
 
 <div id='datasetInfo'>
 
-<img src="/static/images/wait_pyramid.gif" id="wait" height="40" /> <br>
+<img src="/static/images/wait_spiral.gif" id="wait" height="40" /> <br>
 {%  if dataset.name != "Empty" %}
     Map: <b>{{ dataset.name }} </b> <br>
     {{ dataset.description }} <br>

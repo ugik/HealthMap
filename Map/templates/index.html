@@ -88,7 +88,13 @@ $(document).ready(function () {
 });
 
 function geo_success(position) {
-    printLatLong(position.coords.latitude, position.coords.longitude);
+	 var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	 var marker = new google.maps.Marker({
+				position: pos,
+				map: map,
+				title: "You"
+			});
+//    printLatLong(position.coords.latitude, position.coords.longitude);
 }
 
 function geo_error(err) {

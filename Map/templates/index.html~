@@ -20,7 +20,7 @@
 </tr>
 </table>
 
-<input type="button" id="go" value="Your Location" />
+<input type="button" id="location" value="Your Location" />
 
  <div id="map" style="height: 600px">
 
@@ -77,7 +77,7 @@
 
 $(document).ready(function () {
     // wire up button click
-    $('#go').click(function () {
+    $('#location').click(function () {
         // test for presence of geolocation
         if (navigator && navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(geo_success, geo_error);
@@ -88,7 +88,15 @@ $(document).ready(function () {
 });
 
 function geo_success(position) {
-    printLatLong(position.coords.latitude, position.coords.longitude);
+	 var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	 var marker = new google.maps.Marker({
+				position: pos,
+				map: map,
+				title: "You"
+			});
+
+
+//    printLatLong(position.coords.latitude, position.coords.longitude);
 }
 
 function geo_error(err) {

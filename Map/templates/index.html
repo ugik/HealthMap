@@ -13,7 +13,11 @@
 <form action="/random/" method="post">
 {% csrf_token %}
 	<input type="submit" style="height: 32px; width: 75px" value="Random" alt="Map"/>
-</form></td></tr>
+</form></td></td>
+<div id='wait'>
+<img src="/static/images/wait_spiral.gif" id="wait" height="40" /> <br>
+</div></td>
+</tr>
 </table>
 
 
@@ -112,8 +116,6 @@
   </div>
 
 <div id='datasetInfo'>
-
-<img src="/static/images/wait_spiral.gif" id="wait" height="40" /> <br>
 {%  if dataset.name != "Empty" %}
     Map: <b>{{ dataset.name }} </b> <br>
     {{ dataset.description }} <br>

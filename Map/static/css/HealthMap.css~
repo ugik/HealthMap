@@ -18,7 +18,7 @@ html {
 		background:#ddd;
 	}
 h1 {
-        font-size: 17px;
+        font-size: 20px;
 	    margin:5;
     }
 #map {

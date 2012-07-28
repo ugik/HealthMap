@@ -20,10 +20,14 @@
 </tr>
 </table>
 
+<input type="button" id="go" value="Your Location" />
 
  <div id="map" style="height: 600px">
 
-    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCBo3eZFzgJ_u2Wz7ZOVeHz24wjgpmsMGE" type="text/javascript"></script>
+
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=AIzaSyCBo3eZFzgJ_u2Wz7ZOVeHz24wjgpmsMGE" type="text/javascript">
+        
+    </script>
   <body onunload="GUnload()">
 
     <noscript><b>JavaScript must be enabled in order for you to use Google Maps.</b> 
@@ -68,6 +72,48 @@
       {% else %}
           map.setCenter(new GLatLng(33.1,-95),4);
       {% endif %}
+
+
+
+$(document).ready(function () {
+    // wire up button click
+    $('#go').click(function () {
+        // test for presence of geolocation
+        if (navigator && navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+        } else {
+            error('Geolocation is not supported.');
+        }
+    });
+});
+
+function geo_success(position) {
+    printLatLong(position.coords.latitude, position.coords.longitude);
+}
+
+function geo_error(err) {
+    if (err.code == 1) {
+        error('The user denied the request for location information.')
+    } else if (err.code == 2) {
+        error('Your location information is unavailable.')
+    } else if (err.code == 3) {
+        error('The request to get your location timed out.')
+    } else {
+        error('An unknown error occurred while requesting your location.')
+    }
+}
+
+// output lat and long
+function printLatLong(lat, long) {
+    $('body').append('<p>Lat: ' + lat + '</p>');
+    $('body').append('<p>Long: ' + long + '</p>');
+}
+
+function error(msg) {
+    alert(msg);
+}
+
+
 
 
       GEvent.addListener(map, "click", function(overlay,point) {
@@ -136,7 +182,7 @@
     {% endfor %}
     </table>
 {% else %}
-    <font color="blue"> <small>Enter search words or click 'Random' to get map </small></font> <br>
+    <font color="blue"> <small>Enter search words <br>or click 'Random' to get map </small></font> <br>
 {% endif %}
 
 <br>

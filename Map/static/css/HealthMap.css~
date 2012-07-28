@@ -3,7 +3,7 @@ html {
 		padding:0;
 		color:#000;
 		background:#FFFFFF;
-        font-family: "Comic Sans MS";
+        font-family: "Century Gothic";
 	}
 #pageContainer {
 		width:920px;
@@ -14,7 +14,7 @@ html {
 #id_autocomplete {
         width: 500px;
     	padding:5px 10px;
-		background:#99FFFF;
+		background:#ddd;
 	}
 h1 {
 	    margin:5;
@@ -37,7 +37,7 @@ h2 {
 #footer {
 		clear:both;
 		padding:5px 10px;
-		background:#99FFFF;
+		background:#ddd;
 	}
 #footer p {
 		margin:0;

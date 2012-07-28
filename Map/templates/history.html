@@ -10,7 +10,11 @@
 
 <div id='history'>
 {% for map in history %}
-   <small>{{ map.searched }}</small> &nbsp;&nbsp;<a href="/?id={{ map.id }}"/>{{ map.name }}</a><br>
+   <small>{{ map.searched }}</small> &nbsp;&nbsp;<a href="/?id={{ map.id }}"/>{{ map.name }}</a>
+   {% if map.latitude != None and map.latitude|length > 0 %}
+   <small><font color="gray">&nbsp;lat:{{ map.latitude }} &nbsp; lgt:{{ map.longitude }}</font></small>
+   {% endif %}
+   <br>
 {% endfor %}
 </div>
 

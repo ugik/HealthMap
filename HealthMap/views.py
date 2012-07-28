@@ -19,10 +19,6 @@ def HomePage(request):
             dataset = data[0]
 
     dataset_range = datasetRange(dataset)   # figure out what our ranges are (explicit or implicit)
-
-    if dataset.name != 'Empty':     # track history of non-Empty maps rendered
-        history = History(name=dataset.name)
-        history.save()
             
     form = LookupForm()
     context = ({'form': form, 'dataset': dataset, 'dataset_range': dataset_range})
@@ -33,8 +29,16 @@ def LookupRequest(request):
     form = LookupForm(request.POST)
     if form.is_valid():
         data = Dataset.objects.filter(name=form.cleaned_data['autocomplete'])
+        print("Latitude: %s" % form.cleaned_data['latitude'])
+        print("Longitude: %s" % form.cleaned_data['longitude'])
         if data:
             dataset_chosen = data[0].id
+            if data[0].name != 'Empty':     # track history of non-Empty maps rendered
+                history = History(name=data[0].name, 
+                                          latitude=form.cleaned_data['latitude'],
+                                          longitude=form.cleaned_data['longitude'])
+                history.save()
+
             return redirect('/?id=%s' % dataset_chosen)
         else:
             return redirect('/')
@@ -78,9 +82,6 @@ def dataset_gis(request):
 #                    print("row value:%s  low/high:%s" % (row.value.__class__, ran.low.__class__))
                     if row.value >= ran.low and row.value <= ran.high:
                         data['color'] = ran.color
-                        if data['county'] == 'Dukes':
-                            print("range color:%s  data color:%s" % (row.color(), data['color'] ))
-                        break
             else:
                 data['color'] = row.color()
             
@@ -94,7 +95,7 @@ def dataset_gis(request):
             data['points'] = points    # points array within the data array
             results.append(data)
 
-        print ("dataset:%s  gis elements:%s" % (dataset.name, len(results)))
+#        print ("dataset:%s  gis elements:%s" % (dataset.name, len(results)))
 
         return_data = json.dumps(results)
         return HttpResponse(return_data, mimetype='application/javascript')
@@ -105,18 +106,24 @@ def dataset_gis(request):
 def showHistory(request):
     
     class history_mimic(object):
-        def __init__(self, id=None, name=None, searched=None):
+        def __init__(self, id=None, name=None, searched=None, latitude=None, longitude=None):
             self.id = id
             self.name = name
             self.searched = searched
+            self.latitude = latitude
+            self.longitude = longitude
  
     recent_maps = []
     history = History.objects.order_by('-searched')[:30]
     for h in history:
         dataset = Dataset.objects.filter(name__icontains=h.name)
         if dataset:
-            print h.name
-            recent_maps.append(history_mimic(id=dataset[0].id, name=h.name, searched=h.searched.strftime("%m/%d %H:%M")))
+#            print h.name
+            recent_maps.append(history_mimic(id=dataset[0].id, 
+                                                                    name=h.name, 
+                                                                    searched=h.searched.strftime("%m/%d %H:%M"),
+                                                                    latitude = h.latitude,
+                                                                    longitude = h.longitude))
         
     context = ({'history': recent_maps})
     return render_to_response('history.html', context, context_instance=RequestContext(request))
@@ -128,7 +135,7 @@ def dataset_lookup(request):
         if request.is_ajax():
             q = request.GET.get('term', '')
             data = Dataset.objects.filter(name__icontains = q )[:20]
-            print("q:%s rows:%s" % (q, len(data)))
+ #           print("q:%s rows:%s" % (q, len(data)))
             results = []
             for d in data:
                 data_json = {}
@@ -137,7 +144,7 @@ def dataset_lookup(request):
                 data_json['value'] = d.name
                 results.append(data_json)
             return_data = json.dumps(results)
-            print("Results: %s" % len(results))
+#            print("Results: %s" % len(results))
         else:
             return_data = 'fail'
         mimetype = 'application/json'

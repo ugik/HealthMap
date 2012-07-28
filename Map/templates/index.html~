@@ -9,6 +9,8 @@
 <form action="/lookup/" method="post">
 {% csrf_token %}
 	<label for="tags">Search: </label>{{ form.autocomplete }}<input type="submit" style="height: 32px; width: 55px" value="Map" alt="Map"/>
+	<input type="hidden" {{form.latitude.as_hidden }}/>
+	<input type="hidden" {{form.longitude.as_hidden }}/>
 </form></td><td>
 <form action="/random/" method="post">
 {% csrf_token %}
@@ -90,6 +92,9 @@ function geo_success(position) {
      map.addOverlay(new GMarker(point));
 
      printLatLong(position.coords.latitude, position.coords.longitude);
+    // place geo-coordinates in form hidden fields
+    document.getElementById('id_latitude').value = String(position.coords.latitude);
+    document.getElementById('id_longitude').value = String(position.coords.longitude);
 }
 
 function geo_error(err) {
@@ -113,8 +118,6 @@ function printLatLong(lat, long) {
 function error(msg) {
     alert(msg);
 }
-
-
 
 
       GEvent.addListener(map, "click", function(overlay,point) {

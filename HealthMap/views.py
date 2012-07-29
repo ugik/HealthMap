@@ -35,8 +35,8 @@ def LookupRequest(request):
             dataset_chosen = data[0].id
             if data[0].name != 'Empty':     # track history of non-Empty maps rendered
                 history = History(name=data[0].name, 
-                                          latitude=form.cleaned_data['latitude'],
-                                          longitude=form.cleaned_data['longitude'])
+                                          latitude=form.cleaned_data['latitude'][0:15],
+                                          longitude=form.cleaned_data['longitude'][0:15])
                 history.save()
 
             return redirect('/?id=%s' % dataset_chosen)

@@ -133,7 +133,7 @@ def showHistory(request):
                 location = ""
                 for geoname in get_geonames(h.latitude, h.longitude, types):
     #                common_types = set(geoname['types']).intersection(set(types))
-                    if geoname['long_name']!='United States':
+                    if geoname['long_name']!='United States':   # show only non-US country
                         location = location+geoname['long_name'] + " "
 
 

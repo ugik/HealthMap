@@ -9,8 +9,8 @@
 <form action="/lookup/" method="post">
 {% csrf_token %}
 	<label for="tags">Search: </label>{{ form.autocomplete }}<input type="submit" style="height: 32px; width: 55px" value="Map" alt="Map"/>
-	<input type="hidden" {{form.latitude.as_hidden }}/>
-	<input type="hidden" {{form.longitude.as_hidden }}/>
+{{form.latitude.as_hidden }}
+{{form.longitude.as_hidden }}
 </form></td><td>
 <form action="/random/" method="post">
 {% csrf_token %}

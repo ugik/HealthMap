@@ -85,7 +85,7 @@ class History(models.Model):
     searched = models.DateTimeField(editable=False)
     latitude = models.CharField(max_length=15, blank=True)
     longitude = models.CharField(max_length=15, blank=True)
-
+    address = models.CharField(max_length=80, blank=True)
     def save(self, *args, **kwargs):
         if not 'force_insert' in kwargs:
             kwargs['force_insert'] = False

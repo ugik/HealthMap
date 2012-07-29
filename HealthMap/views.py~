@@ -35,8 +35,8 @@ def LookupRequest(request):
             dataset_chosen = data[0].id
             if data[0].name != 'Empty':     # track history of non-Empty maps rendered
                 history = History(name=data[0].name, 
-                                          latitude=form.cleaned_data['latitude'],
-                                          longitude=form.cleaned_data['longitude'])
+                                          latitude=form.cleaned_data['latitude'][0:15],
+                                          longitude=form.cleaned_data['longitude'][0:15])
                 history.save()
 
             return redirect('/?id=%s' % dataset_chosen)
@@ -106,13 +106,16 @@ def dataset_gis(request):
 def showHistory(request):
 
     def get_geonames(lat, lng, types):
-        url = 'http://maps.googleapis.com/maps/api/geocode/json' + \
-                '?latlng={},{}&sensor=false'.format(lat, lng)
-        jsondata = json.load(urllib2.urlopen(url))
-        address_comps = jsondata['results'][0]['address_components']
-        filter_method = lambda x: len(set(x['types']).intersection(types))
-        return filter(filter_method, address_comps)
-    
+        try:
+            url = 'http://maps.googleapis.com/maps/api/geocode/json' + \
+                    '?latlng={},{}&sensor=false'.format(lat, lng)
+            jsondata = json.load(urllib2.urlopen(url))
+            address_comps = jsondata['results'][0]['address_components']
+            filter_method = lambda x: len(set(x['types']).intersection(types))
+            return filter(filter_method, address_comps)
+        except Exception, e:
+            print e
+            
     class history_mimic(object):
         def __init__(self, id=None, name=None, searched=None, latitude=None, longitude=None, location=None):
             self.id = id

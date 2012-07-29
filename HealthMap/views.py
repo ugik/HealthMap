@@ -106,13 +106,17 @@ def dataset_gis(request):
 def showHistory(request):
 
     def get_geonames(lat, lng, types):
-        url = 'http://maps.googleapis.com/maps/api/geocode/json' + \
-                '?latlng={},{}&sensor=false'.format(lat, lng)
-        jsondata = json.load(urllib2.urlopen(url))
-        address_comps = jsondata['results'][0]['address_components']
-        filter_method = lambda x: len(set(x['types']).intersection(types))
-        return filter(filter_method, address_comps)
-    
+        try:
+            url = 'http://maps.googleapis.com/maps/api/geocode/json' + \
+                    '?latlng={},{}&sensor=false'.format(lat, lng)
+            jsondata = json.load(urllib2.urlopen(url))
+            address_comps = jsondata['results'][0]['address_components']
+            filter_method = lambda x: len(set(x['types']).intersection(types))
+            return filter(filter_method, address_comps)
+        except Exception, e:
+            print e
+            return filter(None, None)
+            
     class history_mimic(object):
         def __init__(self, id=None, name=None, searched=None, latitude=None, longitude=None, location=None):
             self.id = id
@@ -131,11 +135,14 @@ def showHistory(request):
             if h.latitude!=None and len(h.latitude)>1:      # reverse geolocation
                 types = ['locality', 'administrative_area_level_1', 'country']
                 location = ""
-                for geoname in get_geonames(h.latitude, h.longitude, types):
-    #                common_types = set(geoname['types']).intersection(set(types))
-                    if geoname['long_name']!='United States':   # show only non-US country
-                        location = location+geoname['long_name'] + " "
-
+                try:
+                    for geoname in get_geonames(h.latitude, h.longitude, types):
+        #                common_types = set(geoname['types']).intersection(set(types))
+                        if geoname['long_name']!='United States':   # show only non-US country
+                            location = location+geoname['long_name'] + " "
+                except Exception, e:
+                    print e
+                    location = ""
 
             recent_maps.append(history_mimic(id=dataset[0].id, 
                                                                     name=h.name, 

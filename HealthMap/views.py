@@ -131,10 +131,9 @@ def showHistory(request):
     for h in history:
         dataset = Dataset.objects.filter(name__icontains=h.name)
         if dataset:
-
+            location = ""
             if h.latitude!=None and len(h.latitude)>1:      # reverse geolocation
                 types = ['locality', 'administrative_area_level_1', 'country']
-                location = ""
                 try:
                     for geoname in get_geonames(h.latitude, h.longitude, types):
         #                common_types = set(geoname['types']).intersection(set(types))
@@ -142,7 +141,6 @@ def showHistory(request):
                             location = location+geoname['long_name'] + " "
                 except Exception, e:
                     print e
-                    location = ""
 
             recent_maps.append(history_mimic(id=dataset[0].id, 
                                                                     name=h.name, 

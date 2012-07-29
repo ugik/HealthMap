@@ -81,8 +81,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=80)),
             ('searched', self.gf('django.db.models.fields.DateTimeField')()),
-            ('latitude', self.gf('django.db.models.fields.CharField')(max_length=15, blank=True)),
-            ('longitude', self.gf('django.db.models.fields.CharField')(max_length=15, blank=True)),
+            ('address', self.gf('django.db.models.fields.CharField')(max_length=80, blank=True)),
         ))
         db.send_create_signal('HealthMap', ['History'])
 
@@ -144,9 +143,8 @@ class Migration(SchemaMigration):
         },
         'HealthMap.history': {
             'Meta': {'object_name': 'History'},
+            'address': ('django.db.models.fields.CharField', [], {'max_length': '80', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'latitude': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'}),
-            'longitude': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
             'searched': ('django.db.models.fields.DateTimeField', [], {})
         },

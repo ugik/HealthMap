@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from HealthMap.models import Dataset, Datarow, Region, Polyline, Range, History
 from HealthMap.forms import LookupForm
 import json, simplejson
-import urllib
+import urllib, urllib2
 import sys
 
 def HomePage(request):
@@ -104,26 +104,45 @@ def dataset_gis(request):
 
 # show map history    
 def showHistory(request):
+
+    def get_geonames(lat, lng, types):
+        url = 'http://maps.googleapis.com/maps/api/geocode/json' + \
+                '?latlng={},{}&sensor=false'.format(lat, lng)
+        jsondata = json.load(urllib2.urlopen(url))
+        address_comps = jsondata['results'][0]['address_components']
+        filter_method = lambda x: len(set(x['types']).intersection(types))
+        return filter(filter_method, address_comps)
     
     class history_mimic(object):
-        def __init__(self, id=None, name=None, searched=None, latitude=None, longitude=None):
+        def __init__(self, id=None, name=None, searched=None, latitude=None, longitude=None, location=None):
             self.id = id
             self.name = name
             self.searched = searched
             self.latitude = latitude
             self.longitude = longitude
+            self.location = location
  
     recent_maps = []
     history = History.objects.order_by('-searched')[:30]
     for h in history:
         dataset = Dataset.objects.filter(name__icontains=h.name)
         if dataset:
-#            print h.name
+
+            if h.latitude!=None and len(h.latitude)>1:      # reverse geolocation
+                types = ['locality', 'administrative_area_level_1', 'country']
+                location = ""
+                for geoname in get_geonames(h.latitude, h.longitude, types):
+    #                common_types = set(geoname['types']).intersection(set(types))
+                    if geoname['long_name']!='United States':
+                        location = location+geoname['long_name'] + " "
+
+
             recent_maps.append(history_mimic(id=dataset[0].id, 
                                                                     name=h.name, 
-                                                                    searched=h.searched.strftime("%m/%d %H:%M")
+                                                                    searched=h.searched.strftime("%m/%d %H:%M"),
                                                                     latitude = h.latitude,
-                                                                    longitude = h.longitude))
+                                                                    longitude = h.longitude,
+                                                                    location = location))
         
     context = ({'history': recent_maps})
     return render_to_response('history.html', context, context_instance=RequestContext(request))

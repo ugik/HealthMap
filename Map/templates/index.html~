@@ -111,7 +111,7 @@ function geo_error(err) {
 
 function printLatLong(lat, long) {
     var theDiv = document.getElementById('footer');
-    var content = document.createTextNode('  (Your coordinates: Lat: ' + lat.substring(0,5) + ' Long: ' + long.substring(0,5) + ')');
+    var content = document.createTextNode('  (Your coordinates: Lat: ' + lat.substring(0,8) + ' Long: ' + long.substring(0,8) + ')');
     theDiv.appendChild(content);
 }
 
@@ -193,7 +193,8 @@ function error(msg) {
 <a href="/history"><img src="/static/images/history_icon.png" id="history" alt="search history" height="35" width="35" /></a>
 <a href="http://www.facebook.com/USHealthMap" target="_blank"><img src="/static/images/fb_icon.png" height="35" width="35" /></a>
 <a href= "mailto:info@healthmap.us" ><img src="/static/images/email_icon.png" id="email" alt="Email us" height="35" width="35" /></a>
- <br>
+<img src="/static/images/Logo.jpg" height="25"/>
+
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

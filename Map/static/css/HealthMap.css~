@@ -6,7 +6,7 @@ html {
         font-family: "Arial";
 	}
 #pageContainer {
-		width:1030px;
+		width:1020px;
 		margin:0 auto;
         background: url(/static/images/Logo.jpg) no-repeat scroll right top #FFFFFF;
         background-size: 120px 50px;

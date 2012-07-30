@@ -91,7 +91,7 @@ function geo_success(position) {
      var point = new GLatLng(position.coords.latitude, position.coords.longitude);
      map.addOverlay(new GMarker(point));
 
-     printLatLong(position.coords.latitude, position.coords.longitude);
+     printLatLong(String(position.coords.latitude), String(position.coords.longitude));
     // place geo-coordinates in form hidden fields
     document.getElementById('id_latitude').value = String(position.coords.latitude);
     document.getElementById('id_longitude').value = String(position.coords.longitude);
@@ -111,7 +111,7 @@ function geo_error(err) {
 
 function printLatLong(lat, long) {
     var theDiv = document.getElementById('footer');
-    var content = document.createTextNode('  (Your coordinates: Lat: ' + lat + ' Long: ' + long + ')');
+    var content = document.createTextNode('  (Your coordinates: Lat: ' + lat.substring(0,8) + ' Long: ' + long.substring(0,8) + ')');
     theDiv.appendChild(content);
 }
 

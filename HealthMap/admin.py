@@ -6,6 +6,11 @@ class RangeAdmin(admin.ModelAdmin):
     search_fields = ['name']
     ordering = ('low',)
 
+class DatasetAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')
+    search_fields = ['name']
+    ordering = ('name',)
+
 class DatarowAdmin(admin.ModelAdmin):
     list_display = ('dataset', 'region', 'value')
     search_fields = ['dataset']
@@ -19,7 +24,7 @@ class RegionAdmin(admin.ModelAdmin):
 admin.site.register(Region, RegionAdmin)
 admin.site.register(Polyline)
 admin.site.register(Category)
-admin.site.register(Dataset)
+admin.site.register(Dataset, DatasetAdmin)
 admin.site.register(Range, RangeAdmin)
 admin.site.register(Datarow, DatarowAdmin)
 admin.site.register(History)

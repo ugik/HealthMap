@@ -214,7 +214,7 @@ def detailRegion(region, region_name):
 
     col[44] = "HIV Cases : "
     cat[44] = "Demographic"
-    desc[44] = "Total number of HIV cases"
+    desc[44] = "Rate of HIV cases"
     source[44] = "National Center for Hepatitis, HIC, STD 20008"
 
     col[46] = "Primary Care Physicians Ratio : "

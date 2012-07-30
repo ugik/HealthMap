@@ -11,7 +11,7 @@
 <div id='history'>
 {% for map in history %}
    <small>{{ map.searched }}</small> &nbsp;&nbsp;<a href="/?id={{ map.id }}"/>{{ map.name }}</a>
-   {% if map.latitude != None and map.latitude|length > 0 %}
+   {% if map.location != None and map.location|length > 1 %}
    <small><font color="gray">&nbsp; (searched from: {{ map.location }})</font></small>
    {% endif %}
    <br>

@@ -1,5 +1,6 @@
 <html>
 <head>
+<title>Health Map</title>
     <link rel='stylesheet' type='text/css' href='/static/css/HealthMap.css' />
     {% block extrahead %}{% endblock %}
 </head>

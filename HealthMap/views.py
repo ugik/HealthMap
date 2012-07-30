@@ -4,9 +4,11 @@ from django.db import models
 from django.http import HttpResponse
 from HealthMap.models import Dataset, Datarow, Region, Polyline, Range, History
 from HealthMap.forms import LookupForm
+import Map.settings
 import json, simplejson
 import urllib, urllib2
-import sys
+import sys, datetime
+import pytz
 
 def HomePage(request):
     empty_dataset = Dataset.objects.get(name='Empty') 
@@ -125,7 +127,10 @@ def showHistory(request):
             self.latitude = latitude
             self.longitude = longitude
             self.location = location
- 
+
+    tz = pytz.timezone(Map.settings.TIME_ZONE)
+    tzoffset = tz.utcoffset(datetime.datetime.utcnow())  # UTC time offset
+
     recent_maps = []
     history = History.objects.order_by('-searched')[:30]
     for h in history:
@@ -142,9 +147,10 @@ def showHistory(request):
                 except Exception, e:
                     print e
 
+            searched = h.searched + tzoffset    # offset to TIME_ZONE in settings
             recent_maps.append(history_mimic(id=dataset[0].id, 
                                                                     name=h.name, 
-                                                                    searched=h.searched.strftime("%m/%d %H:%M"),
+                                                                    searched=searched.strftime("%m/%d %H:%M"),
                                                                     latitude = h.latitude,
                                                                     longitude = h.longitude,
                                                                     location = location))

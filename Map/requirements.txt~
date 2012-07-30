@@ -6,4 +6,5 @@ django-extensions==0.9
 simplejson==2.1.6
 pyshp==1.1.4
 xlrd==0.7.9
+South==0.7.5
 
